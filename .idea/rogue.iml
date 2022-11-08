@@ -5,11 +5,9 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/GraphPack_2022_2023_V1_0/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Rogue_DianaAmaro103678/images" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Rogue_DianaAmaro103678/rooms" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Rogue_DianaAmaro103678/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GraphPack_2022_2023_V1_1/bin" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GraphPack_2022_2023_V1_1/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Rogue_DianaAmaro103678/bin" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GraphPack_2022_2023_V1_1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Rogue_DianaAmaro103678" isTestSource="false" />
     </content>

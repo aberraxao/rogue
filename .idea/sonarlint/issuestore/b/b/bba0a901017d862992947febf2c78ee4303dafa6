@@ -1,0 +1,11 @@
+
+k	java:S117g"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İÈíÃúÿÿÿÿ
+k	java:S117g"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İÈíÃúÿÿÿÿ
+\
+java:S1126A"AReplace this if-then-else statement by a single return statement.(ğâ¼¦úÿÿÿÿ
+O
+java:S2130]"9Use "Integer.parseInt" for this string-to-int conversion.(‡ª«É
+O
+java:S2130_"9Use "Integer.parseInt" for this string-to-int conversion.(ÒÛ™û
+E
+java:S1172c"*Remove this unused method parameter "out".(‘Èîùÿÿÿÿ
