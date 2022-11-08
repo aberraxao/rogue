@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="96059f6d-1183-4b4a-87aa-90eb80471869" name="Changes" comment="Start over base">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/rogue.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageMatrixGUI$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageMatrixGUI.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RogueStarterPack-2022-23_V1_2.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/.settings/org.eclipse.core.resources.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enunciado Projeto de POO 2022-2023 V1.03.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/.project" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/gui/ImageMatrixGUI$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageMatrixGUI$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/gui/ImageMatrixGUI$DisplayWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageMatrixGUI$DisplayWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/gui/ImageMatrixGUI$KeyWatcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageMatrixGUI$KeyWatcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/gui/ImageMatrixGUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/gui/ImageTile.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/gui/ImageTile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/observer/Observed.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/observer/Observed.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/observer/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/observer/Observer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/utils/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/utils/Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/utils/Point2D.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/utils/Point2D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/bin/pt/iscte/poo/utils/Vector2D.class" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/bin/pt/iscte/poo/utils/Vector2D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/gui/ImageMatrixGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/gui/ImageMatrixGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/gui/ImageTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/gui/ImageTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/observer/Observed.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/observer/Observed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/observer/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/observer/Observer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/utils/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/utils/Direction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/utils/Point2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/utils/Point2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphPack_2022_2023_V1_0/src/pt/iscte/poo/utils/Vector2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/utils/Vector2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/.project" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/.settings/org.eclipse.core.resources.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphPack_2022_2023_V1_1/.settings/org.eclipse.core.resources.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/bin/pt/iscte/poo/example/EngineExample.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/bin/pt/iscte/poo/example/EngineExample.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/bin/pt/iscte/poo/example/Floor.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/bin/pt/iscte/poo/example/Floor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/bin/pt/iscte/poo/example/Hero.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/bin/pt/iscte/poo/example/Hero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/bin/pt/iscte/poo/example/MainExample.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/bin/pt/iscte/poo/example/MainExample.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Ankh.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Ankh.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Armor.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Armor.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Bat.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Bat.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Black.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Black.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/DoorClosed.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/DoorClosed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/DoorOpen.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/DoorOpen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/DoorWay.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/DoorWay.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Fire.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Fire.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Fire_old.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Fire_old.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Floor.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Floor.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Grass.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Grass.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Green.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Green.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Hammer.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Hammer.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/HealingPotion.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/HealingPotion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Hero.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Hero.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Key.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Key.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/MightPotion.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/MightPotion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Red.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Red.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/RedGreen.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/RedGreen.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Skeleton.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Skeleton.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/StairsDown.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/StairsDown.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/StairsUp.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/StairsUp.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Sword.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Sword.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Thief.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Thief.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Thug.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Thug.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Trap.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Trap.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Treasure.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Treasure.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/images/Wall.png" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/images/Wall.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/rooms/room0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/rooms/room0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/rooms/room1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/rooms/room1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/rooms/room2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/rooms/room2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/rooms/room3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/rooms/room3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/src/pt/iscte/poo/example/EngineExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/src/pt/iscte/poo/example/EngineExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/src/pt/iscte/poo/example/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/src/pt/iscte/poo/example/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/src/pt/iscte/poo/example/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/src/pt/iscte/poo/example/Hero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rogue_Nome1_Numero1_Nome2_Numero2/src/pt/iscte/poo/example/MainExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rogue_DianaAmaro103678/src/pt/iscte/poo/example/MainExample.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2G0IOIhTXwYCavqbUXuaWTcQkg6" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/aberraxao/Workarea/poo/p1&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.MainExample">
+    <configuration name="MainExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pt.iscte.poo.example.MainExample" />
+      <module name="rogue" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pt.iscte.poo.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <module name="rogue" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MainExample" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="96059f6d-1183-4b4a-87aa-90eb80471869" name="Changes" comment="" />
+      <created>1665519043301</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1665519043301</updated>
+      <workItem from="1665519045558" duration="494000" />
+      <workItem from="1665519550320" duration="2880000" />
+      <workItem from="1667522036294" duration="31000" />
+      <workItem from="1667522152557" duration="205000" />
+      <workItem from="1667522445651" duration="513000" />
+      <workItem from="1667593072409" duration="1834000" />
+      <workItem from="1667936501720" duration="659000" />
+    </task>
+    <task id="LOCAL-00001" summary="Base">
+      <created>1665519084175</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665519084175</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Base" />
+    <MESSAGE value="Start over base" />
+    <option name="LAST_COMMIT_MESSAGE" value="Start over base" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/GraphPack_2022_2023_V1_1/src/pt/iscte/poo/gui/ImageMatrixGUI.java</url>
+          <line>221</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="dir" />
+        <watch expression="dir.listFiles()" language="JAVA" />
+        <watch expression="File(IMAGE_DIR)" />
+        <watch expression="dir.listFiles()" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
