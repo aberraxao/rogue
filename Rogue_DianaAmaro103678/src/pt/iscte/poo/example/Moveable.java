@@ -7,9 +7,15 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Moveable extends AbstractObject {
 
+    private double hitPoints = 0;
 
     public Moveable(String name, Point2D position) {
         super(name, position);
+    }
+
+    public Moveable(String name, Point2D position, double hitPoints) {
+        super(name, position);
+        this.hitPoints = hitPoints;
     }
 
     public void move(Direction d) {
@@ -22,5 +28,17 @@ public class Moveable extends AbstractObject {
     @Override
     public int getLayer() {
         return 1;
+    }
+
+    public double getHitPoints() {
+        return hitPoints;
+    }
+
+    public void setHitPoints(double hitPoints) {
+        this.hitPoints = hitPoints;
+    }
+
+    public void updateHitPoints(double delta) {
+        this.hitPoints = this.hitPoints + delta;
     }
 }

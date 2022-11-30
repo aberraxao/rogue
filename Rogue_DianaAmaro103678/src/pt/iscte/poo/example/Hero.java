@@ -8,7 +8,7 @@ import pt.iscte.poo.utils.Vector2D;
 public class Hero extends Moveable {
 
     public Hero(Point2D position) {
-        super("Hero", position);
+        super("Hero", position, 10);
     }
 
     public void move(Direction d) {
