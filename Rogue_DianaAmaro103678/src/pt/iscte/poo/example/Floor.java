@@ -5,12 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Floor extends AbstractObject {
 
     public Floor(Point2D position) {
-        super(position);
-    }
-
-    @Override
-    public String getName() {
-        return "Floor";
+        super("Floor", position);
     }
 
     @Override

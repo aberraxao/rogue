@@ -5,10 +5,11 @@ import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Hero extends Moveable {
+public class Moveable extends AbstractObject {
 
-    public Hero(Point2D position) {
-        super("Hero", position);
+
+    public Moveable(String name, Point2D position) {
+        super(name, position);
     }
 
     public void move(Direction d) {

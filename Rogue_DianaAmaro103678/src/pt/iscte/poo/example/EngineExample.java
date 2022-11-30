@@ -66,20 +66,25 @@ public class EngineExample implements Observer {
         while (s.hasNextLine() && y <= GRID_HEIGHT) {
             line = s.nextLine();
             for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == '#') elements.add(new Wall(new Point2D(x,y)));
+                if (line.charAt(x) == '#') elements.add(new Wall(new Point2D(x, y)));
             y++;
         }
     }
 
-    private void addElement(Scanner s){
-        /*
-        String[] line;
-        while(s.hasNextLine())
-            line = s.nextLine().split(",");
-            elements.add(new AbstractObject(new Point2D(x,y)))
-            System.out.println(s.nextLine());
+    private void addElement(Scanner s) {
 
-         */
+        String[] line;
+        while (s.hasNextLine()) {
+            line = s.nextLine().split(",");
+            if (line[0].equals("Door")) {
+                if (line.length == 7)
+                    elements.add(new Door(new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2])), line[3],
+                            new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5])), line[6]));
+                else elements.add(new Door(new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2])), line[3],
+                        new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5]))));
+            } else
+                elements.add(new Moveable(line[0], new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2]))));
+        }
     }
 
     public void loadRoom(int nb) {

@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Wall  extends  AbstractObject{
 
     public Wall(Point2D position) {
-        super(position);
+        super("Wall", position);
     }
 
     @Override
