@@ -25,6 +25,9 @@ public class EngineExample implements Observer {
 
     private List<AbstractObject> elements = new ArrayList<>();
     private Hero hero;
+
+    private Skeleton skeleton;
+
     private int turns;
 
     public static EngineExample getInstance() {
@@ -74,16 +77,53 @@ public class EngineExample implements Observer {
     private void addElement(Scanner s) {
 
         String[] line;
+        Point2D position;
+        String nameRoom;
+        Point2D positionRoom;
+        String keyId;
+
         while (s.hasNextLine()) {
             line = s.nextLine().split(",");
-            if (line[0].equals("Door")) {
-                if (line.length == 7)
-                    elements.add(new Door(new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2])), line[3],
-                            new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5])), line[6]));
-                else elements.add(new Door(new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2])), line[3],
-                        new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5]))));
-            } else
-                elements.add(new Moveable(line[0], new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2]))));
+            position = new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2]));
+
+            switch (line[0]) {
+                case "Hero":
+                    elements.add(new Hero(position));
+                    break;
+                case "Skeleton":
+                    elements.add(new Skeleton(position));
+                    break;
+                case "Bat":
+                    break;
+                case "Thug":
+                    break;
+                case "Scorpio":
+                    break;
+                case "Theif":
+                    break;
+                case "Sword":
+                    break;
+                case "Armor":
+                    break;
+                case "HealingPotion":
+                    break;
+                case "Key":
+                    break;
+                case "Door": {
+                    nameRoom = line[3];
+                    positionRoom = new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5]));
+                    if (line.length == 7) {
+                        keyId = line[6];
+                        elements.add(new Door(position, nameRoom, positionRoom, keyId));
+                    } else
+                        elements.add(new Door(position, nameRoom, positionRoom));
+                    break;
+                }
+                case "Treasure":
+                    break;
+                default:
+                    throw new IllegalArgumentException("Element not defined");
+            }
         }
     }
 
@@ -91,19 +131,16 @@ public class EngineExample implements Observer {
 
         try {
             Scanner s = new Scanner(new File("rooms/room" + nb + ".txt"));
-
             addWall(s);
             addElement(s);
-
             s.close();
-
         } catch (FileNotFoundException e) {
             System.err.println("Sala " + nb + " não encontrada.");
         }
     }
 
     private void addObjects() {
-        hero = new Hero(new Point2D(4, 4));
+        hero = new Hero(new Point2D(1, 1));
         gui.addImage(hero);
     }
 
