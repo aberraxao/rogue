@@ -1,6 +1,6 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
@@ -17,8 +17,10 @@ public class Hero extends AbstractObject /*, Moveable*/ {
     }
 
     public void move(Direction d) {
+        // TODO: problema quando vai para a linha dos items
         Vector2D randVector = d.asVector();
-        super.setPosition(getPosition().plus(randVector));
+        Point2D newPos = getPosition().plus(randVector);
+        if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
     }
 
     @Override
