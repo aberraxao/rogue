@@ -15,4 +15,9 @@ public abstract class AbstractObject implements ImageTile {
     public Point2D getPosition() {
         return position;
     }
+
+    public void setPosition(Point2D position){
+        this.position = position;
+    }
+
 }

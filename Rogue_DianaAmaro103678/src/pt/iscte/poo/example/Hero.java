@@ -5,12 +5,10 @@ import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Hero implements ImageTile /*, Moveable*/ {
-
-    private Point2D position;
+public class Hero extends AbstractObject /*, Moveable*/ {
 
     public Hero(Point2D position) {
-        this.position = position;
+        super(position);
     }
 
     @Override
@@ -20,12 +18,7 @@ public class Hero implements ImageTile /*, Moveable*/ {
 
     public void move(Direction d) {
         Vector2D randVector = d.asVector();
-        position = position.plus(randVector);
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return position;
+        super.setPosition(getPosition().plus(randVector));
     }
 
     @Override
