@@ -1,14 +1,15 @@
-package pt.iscte.poo.example;
+package pt.iscte.poo.example.enemies;
 
+import pt.iscte.poo.example.Moveable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Skeleton extends Moveable {
+public class Thug extends Moveable {
 
-    public Skeleton(Point2D position) {
-        super("Skeleton", position, 5);
+    public Thug(Point2D position) {
+        super(Thug.class.getSimpleName(), position, 10);
     }
 
     public void move(Direction d) {

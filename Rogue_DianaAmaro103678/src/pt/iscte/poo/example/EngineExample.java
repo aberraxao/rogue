@@ -2,9 +2,12 @@ package pt.iscte.poo.example;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.iscte.poo.example.enemies.Skeleton;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
@@ -74,57 +77,34 @@ public class EngineExample implements Observer {
         }
     }
 
-    private void addElement(Scanner s) {
+    private void addElement(Scanner s) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         String[] line;
-        Point2D position;
-        String nameRoom;
-        Point2D positionRoom;
-        String keyId;
 
         while (s.hasNextLine()) {
             line = s.nextLine().split(",");
-            position = new Point2D(Integer.parseInt(line[1]), Integer.parseInt(line[2]));
 
-            switch (line[0]) {
-                case "Hero":
-                    elements.add(new Hero(position));
-                    break;
-                case "Skeleton":
-                    elements.add(new Skeleton(position));
-                    break;
-                case "Bat":
-                    break;
-                case "Thug":
-                    break;
-                case "Scorpio":
-                    break;
-                case "Theif":
-                    break;
-                case "Sword":
-                    break;
-                case "Armor":
-                    break;
-                case "HealingPotion":
-                    break;
-                case "Key":
-                    break;
-                case "Door": {
-                    nameRoom = line[3];
-                    positionRoom = new Point2D(Integer.parseInt(line[4]), Integer.parseInt(line[5]));
-                    if (line.length == 7) {
-                        keyId = line[6];
-                        elements.add(new Door(position, nameRoom, positionRoom, keyId));
-                    } else
-                        elements.add(new Door(position, nameRoom, positionRoom));
-                    break;
+            if (line[0].equals("Door")) {
+                if (line.length == 7)
+                    elements.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5), line[6]));
+                else elements.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5)));
+
+            } else {
+                Class<?> clazz;
+                try {
+                    clazz = Class.forName("pt.iscte.poo.example.enemies." + line[0]);
+                } catch (ClassNotFoundException e) {
+                    clazz = Class.forName("pt.iscte.poo.example.items." + line[0]);
                 }
-                case "Treasure":
-                    break;
-                default:
-                    throw new IllegalArgumentException("Element not defined");
+
+                Constructor<?> constructor = clazz.getConstructor(Point2D.class);
+                elements.add((AbstractObject) constructor.newInstance(getPoint2D(line, 1, 2)));
             }
         }
+    }
+
+    private Point2D getPoint2D(String[] line, int x, int y) {
+        return new Point2D(Integer.parseInt(line[x]), Integer.parseInt(line[y]));
     }
 
     public void loadRoom(int nb) {
@@ -136,6 +116,14 @@ public class EngineExample implements Observer {
             s.close();
         } catch (FileNotFoundException e) {
             System.err.println("Sala " + nb + " não encontrada.");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException | InvocationTargetException e) {
+            throw new RuntimeException(e);
         }
     }
 
