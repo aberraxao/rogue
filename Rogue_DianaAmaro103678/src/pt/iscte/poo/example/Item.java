@@ -19,10 +19,10 @@ public class Item extends AbstractObject {
     public void addInventory(int position, Item item)
     {
         inventory.add(position, item);
-    };
+    }
 
     public void removeInventory(int position, Item item)
     {
         inventory.remove(position);
-    };
+    }
 }

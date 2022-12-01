@@ -7,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.iscte.poo.example.enemies.Skeleton;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
@@ -22,15 +21,10 @@ public class EngineExample implements Observer {
 
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
-
     private static EngineExample INSTANCE = null;
     private ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-
     private List<AbstractObject> elements = new ArrayList<>();
     private Hero hero;
-
-    private Skeleton skeleton;
-
     private int turns;
 
     public static EngineExample getInstance() {
@@ -49,6 +43,7 @@ public class EngineExample implements Observer {
         addFloor();
         loadRoom(1);
         addObjects();
+        addHealth();
 
         for (AbstractObject abstractObject : elements) {
             gui.addImage(abstractObject);
@@ -107,6 +102,11 @@ public class EngineExample implements Observer {
         return new Point2D(Integer.parseInt(line[x]), Integer.parseInt(line[y]));
     }
 
+    private void addHealth() {
+        for (int x = 0; x != GRID_WIDTH / 2; x++)
+            elements.add(new Health(new Point2D(x, GRID_HEIGHT)));
+    }
+
     public void loadRoom(int nb) {
 
         try {
@@ -116,13 +116,8 @@ public class EngineExample implements Observer {
             s.close();
         } catch (FileNotFoundException e) {
             System.err.println("Sala " + nb + " não encontrada.");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException | InvocationTargetException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
+                 InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
