@@ -2,11 +2,12 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
+import static pt.iscte.poo.example.GameEngine.logger;
+
 public class Wall  extends GameElement {
 
     public Wall(Point2D position) {
         super("Wall", position);
-        System.out.println(this);
     }
 
     @Override

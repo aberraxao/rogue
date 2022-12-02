@@ -33,8 +33,8 @@ public class GameEngine implements Observer {
     private int turns;
 
     public static GameEngine getInstance() {
-        logger.info("My first log");
         if (INSTANCE == null) INSTANCE = new GameEngine();
+        logger.info("Game is instanced");
         return INSTANCE;
     }
 
@@ -43,7 +43,6 @@ public class GameEngine implements Observer {
         gui.setSize(GRID_WIDTH, GRID_HEIGHT + 1);
         gui.go();
     }
-
 
     public void start() {
         addFloor();
@@ -67,6 +66,7 @@ public class GameEngine implements Observer {
         for (int x = 0; x != GRID_WIDTH; x++)
             for (int y = 0; y != GRID_HEIGHT; y++)
                 elements.add(new Floor(new Point2D(x, y)));
+        logger.info("Floor has been added");
     }
 
     private void addWall(Scanner s) {
@@ -79,6 +79,7 @@ public class GameEngine implements Observer {
                 if (line.charAt(x) == '#') elements.add(new Wall(new Point2D(x, y)));
             y++;
         }
+        logger.info("Wall has been added");
     }
 
     private void addElement(Scanner s) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -116,17 +117,16 @@ public class GameEngine implements Observer {
     }
 
     public void loadRoom(int nb) {
-
         try {
             Scanner s = new Scanner(new File("rooms/room" + nb + ".txt"));
             addWall(s);
             addElement(s);
             s.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Sala " + nb + " não encontrada.");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
-                 InvocationTargetException e) {
-            throw new RuntimeException(e);
+            gui.setMessage("Sala " + nb + " não encontrada.");
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+            // TODO: better error handling
+            gui.setMessage(e.getMessage());
         }
     }
 

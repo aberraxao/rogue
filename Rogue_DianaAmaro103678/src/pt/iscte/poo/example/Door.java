@@ -12,7 +12,6 @@ public class Door extends GameElement {
         this.room = room;
         this.posRoom = posRoom;
         this.key = key;
-        System.out.println(this);
     }
     public Door(Point2D position, String room, Point2D posRoom) {
         super("DoorWay", position);

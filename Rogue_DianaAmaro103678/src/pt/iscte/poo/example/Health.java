@@ -6,7 +6,6 @@ public class Health extends GameElement {
 
     public Health(Point2D position) {
         super("Green", position);
-        System.out.println(this);
     }
 
     @Override

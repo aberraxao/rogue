@@ -6,6 +6,9 @@ import pt.iscte.poo.utils.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+
+import static pt.iscte.poo.example.GameEngine.logger;
 
 public abstract class GameElement implements ImageTile {
 
@@ -18,6 +21,8 @@ public abstract class GameElement implements ImageTile {
     protected GameElement(String name, Point2D position) {
         this.name = name;
         this.position = position;
+        if (logger.isLoggable(Level.INFO))
+            logger.info(this.toString());
     }
 
     @Override

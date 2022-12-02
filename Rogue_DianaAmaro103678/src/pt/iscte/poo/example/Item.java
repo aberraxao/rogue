@@ -9,7 +9,6 @@ public class Item extends GameElement {
 
     public Item(String name, Point2D position) {
         super(name, position);
-        System.out.println(this);
     }
 
     @Override
