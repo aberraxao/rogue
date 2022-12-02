@@ -29,7 +29,7 @@ public class GameEngine implements Observer {
     private List<GameElement> elements = new ArrayList<>();
     private Hero hero;
     private HealthBar healthBar;
-    private Item itemBar;
+    private Inventory inventory;
     private int turns;
 
     public static GameEngine getInstance() {
@@ -45,28 +45,41 @@ public class GameEngine implements Observer {
     }
 
     public void start() {
+        addGameElement();
+        addImage();
+
+        gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
+        gui.update();
+    }
+
+
+    private void addGameElement() {
         addFloor();
-        loadRoom(1);
-        addObjects();
+        addRoom(0);
+        addHero();
         addHealth();
+        addInventory();
+    }
+
+    private void addImage() {
 
         for (GameElement gameElement : elements) {
             gui.addImage(gameElement);
         }
 
-        for (Health health : healthBar.healthList) {
+        for (Health health : healthBar.getHealthList()) {
             gui.addImage(health);
         }
 
-        gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
-        gui.update();
+        for (Item item : inventory.getInventoryList()) {
+            gui.addImage(item);
+        }
     }
 
     private void addFloor() {
         for (int x = 0; x != GRID_WIDTH; x++)
             for (int y = 0; y != GRID_HEIGHT; y++)
                 elements.add(new Floor(new Point2D(x, y)));
-        logger.info("Floor has been added");
     }
 
     private void addWall(Scanner s) {
@@ -79,7 +92,6 @@ public class GameEngine implements Observer {
                 if (line.charAt(x) == '#') elements.add(new Wall(new Point2D(x, y)));
             y++;
         }
-        logger.info("Wall has been added");
     }
 
     private void addElement(Scanner s) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
@@ -113,26 +125,30 @@ public class GameEngine implements Observer {
     }
 
     private void addHealth() {
-        healthBar = new HealthBar((int) (gui.getGridDimension().getHeight() - 1), hero.getHitPoints());
+        healthBar = new HealthBar(hero.getHitPoints(), (int) (gui.getGridDimension().getHeight() - 1));
+    }
+    private void addInventory() {
+        inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight() - 1));
     }
 
-    public void loadRoom(int nb) {
+    private void addHero() {
+        hero = new Hero(new Point2D(1, 1));
+        gui.addImage(hero);
+    }
+
+    public void addRoom(int nb) {
         try {
             Scanner s = new Scanner(new File("rooms/room" + nb + ".txt"));
             addWall(s);
             addElement(s);
             s.close();
         } catch (FileNotFoundException e) {
-            gui.setMessage("Sala " + nb + " não encontrada.");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+            gui.setMessage("Room " + nb + " not found.");
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
+                 InvocationTargetException e) {
             // TODO: better error handling
             gui.setMessage(e.getMessage());
         }
-    }
-
-    private void addObjects() {
-        hero = new Hero(new Point2D(1, 1));
-        gui.addImage(hero);
     }
 
     @Override
@@ -156,5 +172,9 @@ public class GameEngine implements Observer {
 
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
+    }
+
+    public List<GameElement> getElements(){
+        return elements;
     }
 }

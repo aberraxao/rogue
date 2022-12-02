@@ -3,6 +3,8 @@ package pt.iscte.poo.example;
 import pt.iscte.poo.utils.Point2D;
 
 public class Door extends GameElement {
+
+    private final int layer = 1;
     private String key;
     private String room;
     private Point2D posRoom;
@@ -13,14 +15,16 @@ public class Door extends GameElement {
         this.posRoom = posRoom;
         this.key = key;
     }
+
     public Door(Point2D position, String room, Point2D posRoom) {
         super("DoorWay", position);
         this.room = room;
         this.posRoom = posRoom;
     }
+
     @Override
     public int getLayer() {
-        return 0;
+        return layer;
     }
 
     private boolean hasKey() {

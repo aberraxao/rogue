@@ -16,7 +16,7 @@ public abstract class GameElement implements ImageTile {
 
     private Point2D position;
 
-    private int layer;
+    private int layer = 0;
 
     protected GameElement(String name, Point2D position) {
         this.name = name;
@@ -49,7 +49,7 @@ public abstract class GameElement implements ImageTile {
 
     @Override
     public String toString() {
-        return getName() + ": " + getPosition();
+        return getName() + ": layer " + getLayer() + " on pos " + getPosition();
     }
 
     static List<GameElement> select(List<GameElement> elements, Predicate<GameElement> filter) {

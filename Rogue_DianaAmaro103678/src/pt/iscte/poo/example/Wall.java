@@ -6,6 +6,8 @@ import static pt.iscte.poo.example.GameEngine.logger;
 
 public class Wall  extends GameElement {
 
+    private final int layer = 1;
+
     public Wall(Point2D position) {
         super("Wall", position);
     }
@@ -17,6 +19,6 @@ public class Wall  extends GameElement {
 
     @Override
     public int getLayer() {
-        return 1;
+        return layer;
     }
 }

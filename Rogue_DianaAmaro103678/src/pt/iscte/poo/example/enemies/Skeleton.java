@@ -1,11 +1,12 @@
 package pt.iscte.poo.example.enemies;
 
+import pt.iscte.poo.example.Enemie;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Skeleton extends Enemies {
+public class Skeleton extends Enemie {
 
     private int hitPoints = 5;
 

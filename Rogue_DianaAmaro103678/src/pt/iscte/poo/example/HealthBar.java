@@ -13,7 +13,7 @@ public class HealthBar {
 
     List<Health> healthList = new ArrayList<>(HEALTH_MAX_POS);
 
-    public HealthBar(int y, int healthMax) {
+    public HealthBar(int healthMax, int y) {
         this.healthMax = healthMax;
         this.healthPoints = healthMax;
         for (int x = 0; x < HEALTH_MAX_POS; x++)
@@ -44,5 +44,9 @@ public class HealthBar {
             else
                 health.setName("Red");
         }
+    }
+
+    public List<Health> getHealthList(){
+        return this.healthList;
     }
 }

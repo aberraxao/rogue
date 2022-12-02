@@ -1,13 +1,13 @@
 package pt.iscte.poo.example.enemies;
 
-import pt.iscte.poo.example.GameElement;
+import pt.iscte.poo.example.Enemie;
 import pt.iscte.poo.example.Movable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Thief extends Enemies implements Movable {
+public class Thief extends Enemie implements Movable {
 
     private int hitPoints = 5;
 

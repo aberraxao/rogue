@@ -1,11 +1,12 @@
 package pt.iscte.poo.example.enemies;
 
+import pt.iscte.poo.example.Enemie;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Thug extends Enemies {
+public class Thug extends Enemie {
     private int hitPoints = 10;
 
     public Thug(Point2D position) {

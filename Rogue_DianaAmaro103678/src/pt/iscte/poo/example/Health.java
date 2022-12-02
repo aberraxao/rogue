@@ -8,9 +8,4 @@ public class Health extends GameElement {
         super("Green", position);
     }
 
-    @Override
-    public int getLayer() {
-        return 0;
-    }
-
 }
