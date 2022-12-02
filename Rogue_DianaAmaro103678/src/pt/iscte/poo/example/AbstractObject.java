@@ -12,8 +12,10 @@ public abstract class AbstractObject implements ImageTile {
     public AbstractObject(String name, Point2D position) {
         this.name = name;
         this.position = position;
+        System.out.println(this);
     }
 
+    @Override
     public String getName(){
         return this.name;
     }
@@ -27,6 +29,12 @@ public abstract class AbstractObject implements ImageTile {
         this.position = position;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
 
-
+    @Override
+    public String toString() {
+        return getName() + ": " + getPosition();
+    }
 }

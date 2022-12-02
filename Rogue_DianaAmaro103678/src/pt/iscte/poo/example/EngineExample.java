@@ -25,6 +25,8 @@ public class EngineExample implements Observer {
     private ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
     private List<AbstractObject> elements = new ArrayList<>();
     private Hero hero;
+    private HealthBar healthBar;
+    private Item itemBar;
     private int turns;
 
     public static EngineExample getInstance() {
@@ -47,6 +49,10 @@ public class EngineExample implements Observer {
 
         for (AbstractObject abstractObject : elements) {
             gui.addImage(abstractObject);
+        }
+
+        for (Health health : healthBar.healthList) {
+            gui.addImage(health);
         }
 
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
@@ -103,8 +109,7 @@ public class EngineExample implements Observer {
     }
 
     private void addHealth() {
-        for (int x = 0; x != GRID_WIDTH / 2; x++)
-            elements.add(new Health(new Point2D(x, GRID_HEIGHT)));
+        healthBar = new HealthBar((int)(gui.getGridDimension().getHeight()-1), hero.getHitPoints());
     }
 
     public void loadRoom(int nb) {
