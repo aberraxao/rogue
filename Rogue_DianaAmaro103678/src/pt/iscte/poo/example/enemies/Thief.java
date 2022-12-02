@@ -1,15 +1,18 @@
 package pt.iscte.poo.example.enemies;
 
-import pt.iscte.poo.example.Moveable;
+import pt.iscte.poo.example.GameElement;
+import pt.iscte.poo.example.Movable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Thief extends Moveable {
+public class Thief extends Enemies implements Movable {
+
+    private int hitPoints = 5;
 
     public Thief(Point2D position) {
-        super(Thief.class.getSimpleName(), position, 5);
+        super(Thief.class.getSimpleName(), position);
     }
 
     public void move(Direction d) {
@@ -22,5 +25,20 @@ public class Thief extends Moveable {
     @Override
     public int getLayer() {
         return 1;
+    }
+
+    @Override
+    public int getHitPoints() {
+        return this.hitPoints;
+    }
+
+    @Override
+    public void setHitPoints(int hitPoints) {
+
+    }
+
+    @Override
+    public void updateHitPoints(int delta) {
+
     }
 }

@@ -15,26 +15,30 @@ import pt.iscte.poo.utils.Point2D;
 
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 
-public class EngineExample implements Observer {
+public class GameEngine implements Observer {
+
+    public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
-    private static EngineExample INSTANCE = null;
+    private static GameEngine INSTANCE = null;
     private ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private List<AbstractObject> elements = new ArrayList<>();
+    private List<GameElement> elements = new ArrayList<>();
     private Hero hero;
     private HealthBar healthBar;
     private Item itemBar;
     private int turns;
 
-    public static EngineExample getInstance() {
-        if (INSTANCE == null) INSTANCE = new EngineExample();
+    public static GameEngine getInstance() {
+        logger.info("My first log");
+        if (INSTANCE == null) INSTANCE = new GameEngine();
         return INSTANCE;
     }
 
-    private EngineExample() {
+    private GameEngine() {
         gui.registerObserver(this);
         gui.setSize(GRID_WIDTH, GRID_HEIGHT + 1);
         gui.go();
@@ -47,8 +51,8 @@ public class EngineExample implements Observer {
         addObjects();
         addHealth();
 
-        for (AbstractObject abstractObject : elements) {
-            gui.addImage(abstractObject);
+        for (GameElement gameElement : elements) {
+            gui.addImage(gameElement);
         }
 
         for (Health health : healthBar.healthList) {
@@ -67,7 +71,6 @@ public class EngineExample implements Observer {
 
     private void addWall(Scanner s) {
         // TODO: verificar o tamanho do mapa
-        // TODO: x,y ao contrário?
         int y = 0;
         String line;
         while (s.hasNextLine() && y <= GRID_HEIGHT) {
@@ -99,7 +102,7 @@ public class EngineExample implements Observer {
                 }
 
                 Constructor<?> constructor = clazz.getConstructor(Point2D.class);
-                elements.add((AbstractObject) constructor.newInstance(getPoint2D(line, 1, 2)));
+                elements.add((GameElement) constructor.newInstance(getPoint2D(line, 1, 2)));
             }
         }
     }
@@ -109,7 +112,7 @@ public class EngineExample implements Observer {
     }
 
     private void addHealth() {
-        healthBar = new HealthBar((int)(gui.getGridDimension().getHeight()-1), hero.getHitPoints());
+        healthBar = new HealthBar((int) (gui.getGridDimension().getHeight() - 1), hero.getHitPoints());
     }
 
     public void loadRoom(int nb) {

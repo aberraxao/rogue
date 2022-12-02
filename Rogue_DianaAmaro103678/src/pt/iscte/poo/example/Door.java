@@ -2,7 +2,7 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Door extends AbstractObject {
+public class Door extends GameElement {
     private String key;
     private String room;
     private Point2D posRoom;
@@ -12,6 +12,7 @@ public class Door extends AbstractObject {
         this.room = room;
         this.posRoom = posRoom;
         this.key = key;
+        System.out.println(this);
     }
     public Door(Point2D position, String room, Point2D posRoom) {
         super("DoorWay", position);

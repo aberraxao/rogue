@@ -1,15 +1,15 @@
 package pt.iscte.poo.example.enemies;
 
-import pt.iscte.poo.example.Moveable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Thug extends Moveable {
+public class Thug extends Enemies {
+    private int hitPoints = 10;
 
     public Thug(Point2D position) {
-        super(Thug.class.getSimpleName(), position, 10);
+        super(Thug.class.getSimpleName(), position);
     }
 
     public void move(Direction d) {
@@ -19,8 +19,4 @@ public class Thug extends Moveable {
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
     }
 
-    @Override
-    public int getLayer() {
-        return 1;
-    }
 }

@@ -1,19 +1,22 @@
-package pt.iscte.poo.example;
+package pt.iscte.poo.example.enemies;
 
+import pt.iscte.poo.example.GameElement;
+import pt.iscte.poo.example.Movable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Moveable extends AbstractObject {
+public abstract class Enemies extends GameElement implements Movable {
 
+    private final int layer = 1;
     private int hitPoints = 0;
 
-    public Moveable(String name, Point2D position) {
+    public Enemies(String name, Point2D position) {
         super(name, position);
     }
 
-    public Moveable(String name, Point2D position, int hitPoints) {
+    public Enemies(String name, Point2D position, int hitPoints) {
         super(name, position);
         this.hitPoints = hitPoints;
     }
@@ -23,11 +26,6 @@ public class Moveable extends AbstractObject {
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
-    }
-
-    @Override
-    public int getLayer() {
-        return 1;
     }
 
     public int getHitPoints() {
@@ -41,4 +39,6 @@ public class Moveable extends AbstractObject {
     public void updateHitPoints(int delta) {
         this.hitPoints = this.hitPoints + delta;
     }
+
+
 }

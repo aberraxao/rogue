@@ -7,6 +7,7 @@ public class Armor extends Item {
 
     public Armor(Point2D position) {
         super(Armor.class.getSimpleName(), position);
+        System.out.println(this);
     }
 
 }

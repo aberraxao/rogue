@@ -7,6 +7,7 @@ public class Sword extends Item {
 
     public Sword(Point2D position) {
         super(Sword.class.getSimpleName(), position);
+        System.out.println(this);
     }
 
 }

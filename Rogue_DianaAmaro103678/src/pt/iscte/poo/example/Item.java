@@ -4,11 +4,12 @@ import pt.iscte.poo.utils.Point2D;
 
 import java.util.ArrayList;
 
-public class Item extends AbstractObject {
+public class Item extends GameElement {
     ArrayList<Item> inventory = new ArrayList<>();
 
     public Item(String name, Point2D position) {
         super(name, position);
+        System.out.println(this);
     }
 
     @Override
