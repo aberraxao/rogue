@@ -5,8 +5,21 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Key extends Item {
 
-    public Key(Point2D position) {
+    private int layer = 3;
+    String keyId;
+
+    public Key(Point2D position, String keyId) {
         super(Key.class.getSimpleName(), position);
+        this.keyId = keyId;
     }
 
+    public String getKeyId() {
+
+        return this.keyId;
+    }
+
+    @Override
+    public int getLayer(){
+        return this.layer;
+    }
 }

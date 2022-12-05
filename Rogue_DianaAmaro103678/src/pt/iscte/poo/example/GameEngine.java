@@ -7,12 +7,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.iscte.poo.example.items.Key;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
+import javax.swing.text.Position;
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -25,11 +27,11 @@ public class GameEngine implements Observer {
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
     private static GameEngine INSTANCE = null;
-    private ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private List<GameElement> elements = new ArrayList<>();
+    private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
+    private static List<GameElement> elements = new ArrayList<>();
+    private static HealthBar healthBar;
+    private static Inventory inventory;
     private Hero hero;
-    private HealthBar healthBar;
-    private Inventory inventory;
     private int turns;
 
     public static GameEngine getInstance() {
@@ -106,6 +108,8 @@ public class GameEngine implements Observer {
                     elements.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5), line[6]));
                 else elements.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5)));
 
+            } else if (line[0].equals("Key")) {
+                elements.add(new Key(getPoint2D(line, 1, 2), line[3]));
             } else {
                 Class<?> clazz;
                 try {
@@ -127,6 +131,7 @@ public class GameEngine implements Observer {
     private void addHealth() {
         healthBar = new HealthBar(hero.getHitPoints(), (int) (gui.getGridDimension().getHeight() - 1));
     }
+
     private void addInventory() {
         inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight() - 1));
     }
@@ -168,13 +173,28 @@ public class GameEngine implements Observer {
         } else if (key == KeyEvent.VK_UP) {
             hero.move(Direction.UP);
             turns++;
+        } else if (key >= KeyEvent.VK_1 || key <= KeyEvent.VK_3) {
+            inventory.removeInventoryIntoPosition(Character.getNumericValue(key)-1, hero.getPosition());
         }
 
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
     }
 
-    public List<GameElement> getElements(){
+    public static List<GameElement> getElements() {
         return elements;
     }
+
+    public static Inventory getInventory() {
+        return inventory;
+    }
+
+    public static void updateGui() {
+        gui.update();
+    }
+
+    public static void sendMessageToGui(String message) {
+        gui.setMessage(message);
+    }
+
 }

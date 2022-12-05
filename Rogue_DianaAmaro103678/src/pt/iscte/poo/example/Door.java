@@ -34,4 +34,8 @@ public class Door extends GameElement {
     public String getKey() {
         return this.key;
     }
+
+    public void openDoor () {
+        super.setName("DoorOpen");
+    }
 }

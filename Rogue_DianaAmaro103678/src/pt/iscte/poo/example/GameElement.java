@@ -47,6 +47,9 @@ public abstract class GameElement implements ImageTile {
         return layer;
     }
 
+    public void setLayer(int layer) {
+        this.layer = layer;
+    }
     @Override
     public String toString() {
         return getName() + ": layer " + getLayer() + " on pos " + getPosition();
