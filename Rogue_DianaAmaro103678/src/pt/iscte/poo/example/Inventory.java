@@ -10,16 +10,16 @@ import java.util.function.Predicate;
 public class Inventory {
 
     private static final int ITEM_MAX = 3;
-    public static final String DEFAULT_NAME = "Black";
-    public static final int DEFAULT_LAYER = 1;
-    int inventoryPosX;
-    int inventoryPosY;
+    private static final String DEFAULT_ITEM = "Black";
+    private static final int DEFAULT_LAYER = 1;
+    private final int inventoryWidth;
+    private final int inventoryHeight;
 
     List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
-    public Inventory(int inventoryMax, int y) {
-        this.inventoryPosX = inventoryMax - ITEM_MAX;
-        this.inventoryPosY = y;
+    public Inventory(int gridWidth, int gridHeight) {
+        this.inventoryWidth = gridWidth - ITEM_MAX;
+        this.inventoryHeight = gridHeight - 1;
         for (int x = 0; x < ITEM_MAX; x++)
             inventoryList.add(defaultInventoryItem(x));
     }
@@ -33,13 +33,13 @@ public class Inventory {
     }
 
     private Item defaultInventoryItem(int position) {
-        return new Item(DEFAULT_NAME, new Point2D(inventoryPosX + position, this.inventoryPosY), DEFAULT_LAYER);
+        return new Item(DEFAULT_ITEM, new Point2D(inventoryWidth + position, inventoryHeight), DEFAULT_LAYER);
     }
 
     public void addInventory(Item item) {
         for (int x = 0; x < ITEM_MAX; x++)
-            if (inventoryList.get(x).getName().equals(DEFAULT_NAME)) {
-                item.setPosition(new Point2D(inventoryPosX + x, inventoryPosY));
+            if (inventoryList.get(x).getName().equals(DEFAULT_ITEM)) {
+                item.setPosition(new Point2D(inventoryWidth + x, inventoryHeight));
                 inventoryList.set(x, item);
                 return;
             }
@@ -55,7 +55,7 @@ public class Inventory {
     }
 
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (getItem(position).getName().equals(DEFAULT_NAME)) GameEngine.sendMessageToGui("Nothing to be removed");
+        if (getItem(position).getName().equals(DEFAULT_ITEM)) GameEngine.sendMessageToGui("Nothing to be removed");
         else {
             getItem(position).setPosition(newPosition);
             removeInventory(position);
