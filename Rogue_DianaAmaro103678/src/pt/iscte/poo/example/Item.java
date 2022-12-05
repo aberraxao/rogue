@@ -23,5 +23,4 @@ public class Item extends GameElement {
     public void setLayer(int layer) {
         this.layer = layer;
     }
-
 }

@@ -4,7 +4,6 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Door extends GameElement {
 
-    private final int layer = 1;
     private String key;
     private String room;
     private Point2D posRoom;
@@ -24,7 +23,7 @@ public class Door extends GameElement {
 
     @Override
     public int getLayer() {
-        return layer;
+        return 1;
     }
 
     private boolean hasKey() {

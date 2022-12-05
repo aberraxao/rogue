@@ -7,7 +7,6 @@ import pt.iscte.poo.utils.Vector2D;
 
 public abstract class Enemie extends GameElement implements Movable {
 
-    private final int layer = 2;
     private int hitPoints = 0;
 
     public Enemie(String name, Point2D position) {
@@ -20,7 +19,6 @@ public abstract class Enemie extends GameElement implements Movable {
     }
 
     public void move(Direction d) {
-        // TODO: problema quando vai para a linha dos items
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
@@ -40,6 +38,6 @@ public abstract class Enemie extends GameElement implements Movable {
 
     @Override
     public int getLayer(){
-        return layer;
+        return 3;
     }
 }

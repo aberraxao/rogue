@@ -200,5 +200,4 @@ public class GameEngine implements Observer {
     public static void sendMessageToGui(String message) {
         gui.setMessage(message);
     }
-
 }

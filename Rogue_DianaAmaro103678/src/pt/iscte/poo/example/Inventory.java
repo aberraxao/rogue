@@ -10,20 +10,22 @@ import java.util.function.Predicate;
 public class Inventory {
 
     private static final int ITEM_MAX = 3;
+    public static final String DEFAULT_NAME = "Black";
+    public static final int DEFAULT_LAYER = 1;
     int inventoryPosX;
     int inventoryPosY;
 
-    List<Item> inventory = new ArrayList<>(ITEM_MAX);
+    List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
     public Inventory(int inventoryMax, int y) {
         this.inventoryPosX = inventoryMax - ITEM_MAX;
         this.inventoryPosY = y;
         for (int x = 0; x < ITEM_MAX; x++)
-            inventory.add(defaultInventoryItem(x));
+            inventoryList.add(defaultInventoryItem(x));
     }
 
     public List<Item> getInventoryList() {
-        return this.inventory;
+        return this.inventoryList;
     }
 
     private Item getItem(int position) {
@@ -31,22 +33,21 @@ public class Inventory {
     }
 
     private Item defaultInventoryItem(int position) {
-        return new Item("Black", new Point2D(inventoryPosX + position, this.inventoryPosY), 0);
+        return new Item(DEFAULT_NAME, new Point2D(inventoryPosX + position, this.inventoryPosY), DEFAULT_LAYER);
     }
 
     public void addInventory(Item item) {
         for (int x = 0; x < ITEM_MAX; x++)
-            if (inventory.get(x).getName().equals("Black")) {
+            if (inventoryList.get(x).getName().equals(DEFAULT_NAME)) {
                 item.setPosition(new Point2D(inventoryPosX + x, inventoryPosY));
-                inventory.set(0, item);
+                inventoryList.set(x, item);
                 return;
             }
-
-        GameEngine.sendMessageToGui("Unable to save " + item.getName() + ". Inventory is full!");
+        GameEngine.sendMessageToGui("Inventory is full!");
     }
 
     private void setDefault(int position) {
-        inventory.set(position, defaultInventoryItem(position));
+        inventoryList.set(position, defaultInventoryItem(position));
     }
 
     public void removeInventory(int position) {
@@ -54,7 +55,7 @@ public class Inventory {
     }
 
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (getItem(position).getName().equals("Black")) GameEngine.sendMessageToGui("Nothing to be removed");
+        if (getItem(position).getName().equals(DEFAULT_NAME)) GameEngine.sendMessageToGui("Nothing to be removed");
         else {
             getItem(position).setPosition(newPosition);
             removeInventory(position);
@@ -65,15 +66,13 @@ public class Inventory {
         return getItemPos(this.getInventoryList(), el -> el.getName().equals(itemName)) != -1;
     }
 
-    Integer getKeyPos(String keyId) {
+    Integer getKeyIdPos(String keyId) {
         return getItemPos(this.getInventoryList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId));
     }
 
     static Integer getItemPos(List<Item> items, Predicate<Item> filter) {
         for (Item it : items)
             if (filter.test(it)) return items.indexOf(it);
-
         return -1;
     }
-
 }

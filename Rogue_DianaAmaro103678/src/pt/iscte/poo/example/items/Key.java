@@ -5,7 +5,6 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Key extends Item {
 
-    private int layer = 3;
     String keyId;
 
     public Key(Point2D position, String keyId) {
@@ -14,12 +13,6 @@ public class Key extends Item {
     }
 
     public String getKeyId() {
-
         return this.keyId;
-    }
-
-    @Override
-    public int getLayer(){
-        return this.layer;
     }
 }
