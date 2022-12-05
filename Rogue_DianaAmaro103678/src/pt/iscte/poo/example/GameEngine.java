@@ -78,6 +78,10 @@ public class GameEngine implements Observer {
         }
     }
 
+    public static void removeImage(Item item) {
+        gui.removeImage(item);
+    }
+
     private void addFloor() {
         for (int x = 0; x != GRID_WIDTH; x++)
             for (int y = 0; y != GRID_HEIGHT; y++)
@@ -173,8 +177,8 @@ public class GameEngine implements Observer {
         } else if (key == KeyEvent.VK_UP) {
             hero.move(Direction.UP);
             turns++;
-        } else if (key >= KeyEvent.VK_1 || key <= KeyEvent.VK_3) {
-            inventory.removeInventoryIntoPosition(Character.getNumericValue(key)-1, hero.getPosition());
+        } else if (key >= KeyEvent.VK_1 && key <= KeyEvent.VK_3) {
+            inventory.removeInventoryIntoPosition(Character.getNumericValue(key) - 1, hero.getPosition());
         }
 
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);

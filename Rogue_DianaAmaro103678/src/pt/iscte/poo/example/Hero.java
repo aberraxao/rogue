@@ -1,13 +1,13 @@
 package pt.iscte.poo.example;
 
 import pt.iscte.poo.example.items.Key;
+import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.List;
 
-import static pt.iscte.poo.example.GameEngine.getInventory;
-import static pt.iscte.poo.example.GameEngine.logger;
+import static pt.iscte.poo.example.GameEngine.*;
 
 public class Hero extends GameElement implements Movable {
 
@@ -39,13 +39,17 @@ public class Hero extends GameElement implements Movable {
             } else {
                 if (this.getName().equals("Hero")) {
                     if (el.getName().matches("DoorWay|DoorOpen")) {
-
+                        super.setPosition(position);
+                        GameEngine.updateGui();
                         logger.info(this.getName() + " is moving to another room");
                     } else if (el.getName().equals("DoorClosed")) {
-                        if (GameEngine.getInventory().hasKey(((Door) el).getKey())) {
+                        Integer inventoryPos = GameEngine.getInventory().getKeyPos(((Door) el).getKey());
+                        if (inventoryPos != -1) {
                             ((Door) el).openDoor();
-                            // TODO
+                            GameEngine.removeImage(GameEngine.getInventory().getInventoryList().get(inventoryPos));
+                            GameEngine.getInventory().removeInventory(inventoryPos);
                             super.setPosition(position);
+                            GameEngine.updateGui();
                             logger.info(this.getName() + " opened a door and is moving to another room");
                         } else {
                             logger.info(this.getName() + " cannot move because he has no key for that door");

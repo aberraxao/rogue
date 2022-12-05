@@ -30,7 +30,7 @@ public class Inventory {
         return this.getInventoryList().get(position);
     }
 
-    private Item defaultInventoryItem(int position){
+    private Item defaultInventoryItem(int position) {
         return new Item("Black", new Point2D(inventoryPosX + position, this.inventoryPosY), 0);
     }
 
@@ -45,8 +45,8 @@ public class Inventory {
         GameEngine.sendMessageToGui("Unable to save " + item.getName() + ". Inventory is full!");
     }
 
-    private void setDefault(int position){
-        inventory.set(position,defaultInventoryItem(position));
+    private void setDefault(int position) {
+        inventory.set(position, defaultInventoryItem(position));
     }
 
     public void removeInventory(int position) {
@@ -54,8 +54,7 @@ public class Inventory {
     }
 
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (getItem(position).getName().equals("Black"))
-            GameEngine.sendMessageToGui("Nothing to be removed");
+        if (getItem(position).getName().equals("Black")) GameEngine.sendMessageToGui("Nothing to be removed");
         else {
             getItem(position).setPosition(newPosition);
             removeInventory(position);
@@ -63,19 +62,18 @@ public class Inventory {
     }
 
     boolean inInventory(String itemName) {
-        return select(this.getInventoryList(), el -> el.getName().equals(itemName)).isEmpty();
+        return getItemPos(this.getInventoryList(), el -> el.getName().equals(itemName)) != -1;
     }
 
-    boolean hasKey(String keyId) {
-        return !select(this.getInventoryList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId)).isEmpty();
+    Integer getKeyPos(String keyId) {
+        return getItemPos(this.getInventoryList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId));
     }
 
-    static List<Item> select(List<Item> items, Predicate<Item> filter) {
-        List<Item> selection = new ArrayList<>();
+    static Integer getItemPos(List<Item> items, Predicate<Item> filter) {
         for (Item it : items)
-            if (filter.test(it)) selection.add(it);
+            if (filter.test(it)) return items.indexOf(it);
 
-        return selection;
+        return -1;
     }
 
 }
