@@ -13,11 +13,11 @@ public class HealthBar {
 
     List<Health> healthList = new ArrayList<>(HEALTH_MAX_POS);
 
-    public HealthBar(int healthMax, int y) {
+    public HealthBar(int healthMax, int gridHeight) {
         this.healthMax = healthMax;
         this.healthPoints = healthMax;
         for (int x = 0; x < HEALTH_MAX_POS; x++)
-            healthList.add(new Health(new Point2D(x, y)));
+            healthList.add(new Health(new Point2D(x, gridHeight)));
     }
 
     public double getHealth() {
@@ -46,7 +46,7 @@ public class HealthBar {
         }
     }
 
-    public List<Health> getHealthList(){
+    public List<Health> getList() {
         return this.healthList;
     }
 }

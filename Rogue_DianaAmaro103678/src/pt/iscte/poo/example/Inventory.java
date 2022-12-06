@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static pt.iscte.poo.example.GameEngine.logger;
+
 public class Inventory {
 
     private static final int ITEM_MAX = 3;
@@ -24,12 +26,12 @@ public class Inventory {
             inventoryList.add(defaultInventoryItem(x));
     }
 
-    public List<Item> getInventoryList() {
+    public List<Item> getList() {
         return this.inventoryList;
     }
 
     private Item getItem(int position) {
-        return this.getInventoryList().get(position);
+        return this.getList().get(position);
     }
 
     private Item defaultInventoryItem(int position) {
@@ -55,7 +57,8 @@ public class Inventory {
     }
 
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (getItem(position).getName().equals(DEFAULT_ITEM)) GameEngine.sendMessageToGui("Nothing to be removed");
+        if (getItem(position).getName().equals(DEFAULT_ITEM))
+            logger.info("Nothing to be removed");
         else {
             getItem(position).setPosition(newPosition);
             removeInventory(position);
@@ -63,11 +66,11 @@ public class Inventory {
     }
 
     boolean inInventory(String itemName) {
-        return getItemPos(this.getInventoryList(), el -> el.getName().equals(itemName)) != -1;
+        return getItemPos(this.getList(), el -> el.getName().equals(itemName)) != -1;
     }
 
     Integer getKeyIdPos(String keyId) {
-        return getItemPos(this.getInventoryList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId));
+        return getItemPos(this.getList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId));
     }
 
     static Integer getItemPos(List<Item> items, Predicate<Item> filter) {

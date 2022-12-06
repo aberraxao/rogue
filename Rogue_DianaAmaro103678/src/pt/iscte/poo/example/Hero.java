@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 
 import java.util.List;
 
-import static pt.iscte.poo.example.GameEngine.*;
+import static pt.iscte.poo.example.GameEngine.logger;
 
 public class Hero extends GameElement implements Movable {
 
@@ -36,7 +36,7 @@ public class Hero extends GameElement implements Movable {
             } else if (el.getLayer() == 2) {
                 handleInventory(el, position);
             } else {
-                logger.info(this.getName() + " cannot leave the room");
+                logger.info(this.getName() + " hit a " + el.getName());
             }
     }
 
@@ -90,7 +90,7 @@ public class Hero extends GameElement implements Movable {
         } else {
             logger.info(this.getName() + " opens a door and moves to another room");
             ((Door) el).openDoor();
-            GameEngine.removeImage(GameEngine.getInventory().getInventoryList().get(inventoryPos));
+            GameEngine.removeGuiImage(GameEngine.getInventory().getList().get(inventoryPos));
             GameEngine.getInventory().removeInventory(inventoryPos);
             handleNewRoom(el, position);
         }
