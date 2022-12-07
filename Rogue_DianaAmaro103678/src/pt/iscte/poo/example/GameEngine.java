@@ -12,6 +12,8 @@ import pt.iscte.poo.utils.Point2D;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
+import static java.lang.System.exit;
+
 public class GameEngine implements Observer {
 
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -50,6 +52,12 @@ public class GameEngine implements Observer {
 
     public static void updateGui() {
         gui.update();
+    }
+
+    public static void closeGui() {
+        // TODO: improve this
+        gui.dispose();
+        exit(0);
     }
 
     public static void sendMessageToGui(String message) {
@@ -119,6 +127,5 @@ public class GameEngine implements Observer {
 
     public static void updateRoom(String nb) {
         setRoom(nb);
-
     }
 }

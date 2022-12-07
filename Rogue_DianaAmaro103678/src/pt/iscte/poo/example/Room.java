@@ -2,22 +2,21 @@ package pt.iscte.poo.example;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import pt.iscte.poo.example.items.Key;
+import pt.iscte.poo.example.enemies.*;
+import pt.iscte.poo.example.items.*;
 import pt.iscte.poo.utils.Point2D;
 
 import static pt.iscte.poo.example.GameEngine.sendMessageToGui;
+import static pt.iscte.poo.example.GameEngine.closeGui;
 
 public class Room {
 
     private final int gridWidth;
     private final int gridHeight;
-    private final String roomPath = "rooms/room{NB}.txt";
 
     List<GameElement> roomItems = new ArrayList<>();
 
@@ -26,17 +25,14 @@ public class Room {
         this.gridHeight = gridHeight;
 
         try {
-            Scanner s = new Scanner(new File(roomPath.replace("{NB}", nb)));
+            String roomPath = "rooms/room{NB}.txt".replace("{NB}", nb);
+            Scanner s = new Scanner(new File(roomPath));
             addFloor();
             addWall(s);
             addElement(s);
             s.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException fnfe) {
             sendMessageToGui("Room " + nb + " not found.");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException |
-                 InvocationTargetException e) {
-            // TODO: better error handling
-            sendMessageToGui(e.getMessage());
         }
     }
 
@@ -47,7 +43,6 @@ public class Room {
     }
 
     private void addWall(Scanner s) {
-        // TODO: verificar o tamanho do mapa
         int y = 0;
         String line;
         while (s.hasNextLine() && y <= this.gridHeight) {
@@ -56,36 +51,46 @@ public class Room {
                 if (line.charAt(x) == '#') roomItems.add(new Wall(new Point2D(x, y)));
             y++;
         }
+        if (y != this.gridHeight + 1) sendMessageToGui("The room height should be " + this.gridHeight);
     }
 
     private Point2D getPoint2D(String[] line, int x, int y) {
         return new Point2D(Integer.parseInt(line[x]), Integer.parseInt(line[y]));
     }
 
-    private void addElement(Scanner s) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-
-        String[] line;
+    private void addElement(Scanner s) {
 
         while (s.hasNextLine()) {
-            line = s.nextLine().split(",");
 
-            if (line[0].equals("Door")) {
-                if (line.length == 7)
-                    roomItems.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5), line[6]));
-                else roomItems.add(new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5)));
+            String[] line = s.nextLine().split(",");
+            String elName = line[0];
 
-            } else if (line[0].equals("Key")) {
-                roomItems.add(new Key(getPoint2D(line, 1, 2), line[3]));
-            } else {
-                Class<?> clazz;
-                try {
-                    clazz = Class.forName("pt.iscte.poo.example.enemies." + line[0]);
-                } catch (ClassNotFoundException e) {
-                    clazz = Class.forName("pt.iscte.poo.example.items." + line[0]);
-                }
-
-                Constructor<?> constructor = clazz.getConstructor(Point2D.class);
-                roomItems.add((GameElement) constructor.newInstance(getPoint2D(line, 1, 2)));
+            try {
+                GameElement gameElement = switch (elName) {
+                    case "Door" -> {
+                        if (line.length == 7)
+                            yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5), line[6]);
+                        else
+                            yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5));
+                    }
+                    case "Bat" -> new Bat(getPoint2D(line, 1, 2));
+                    case "Scorpio" -> new Scorpio(getPoint2D(line, 1, 2));
+                    case "Skeleton" -> new Skeleton(getPoint2D(line, 1, 2));
+                    case "Thief" -> new Thief(getPoint2D(line, 1, 2));
+                    case "Thug" -> new Thug(getPoint2D(line, 1, 2));
+                    case "Armor" -> new Armor(getPoint2D(line, 1, 2));
+                    case "HealingPotion" -> new HealingPotion(getPoint2D(line, 1, 2));
+                    case "Key" -> new Key(getPoint2D(line, 1, 2), line[3]);
+                    case "Sword" -> new Sword(getPoint2D(line, 1, 2));
+                    case "Treasure" -> new Treasure(getPoint2D(line, 1, 2));
+                    default -> null;
+                };
+                if (gameElement == null) {
+                    sendMessageToGui("A class needs to be defined for " + elName);
+                    closeGui();
+                } else roomItems.add(gameElement);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new ArrayIndexOutOfBoundsException("The parameters are not well defined for the class " + elName);
             }
         }
     }
