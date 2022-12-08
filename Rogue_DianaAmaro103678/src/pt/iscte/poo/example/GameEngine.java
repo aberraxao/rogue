@@ -50,11 +50,11 @@ public class GameEngine implements Observer {
         return INSTANCE;
     }
 
-    public int getGridHeight(){
+    public int getGridHeight() {
         return GRID_HEIGHT;
     }
 
-    public int getGridWidth(){
+    public int getGridWidth() {
         return GRID_WIDTH;
     }
 
@@ -91,6 +91,7 @@ public class GameEngine implements Observer {
     public static void setCurrentRoom(int nb) {
         currentRoom = nb;
     }
+
     public static void setHeroCurrentPosition(Point2D position) {
         currentHeroPosition = position;
     }

@@ -33,15 +33,17 @@ public class Room {
             addWall(s);
             addElement(s);
             s.close();
-        } catch (FileNotFoundException fnfe) {
+        } catch (FileNotFoundException e) {
             sendMessageToGui("Room " + nb + " not found.");
         }
     }
 
     private void addFloor() {
-        for (int x = 0; x != this.gridWidth; x++)
+        for (int x = 0; x != this.gridWidth; x++) {
             for (int y = 0; y != this.gridHeight; y++)
                 roomElements.add(new Floor(new Point2D(x, y)));
+            roomElements.add(new Item("Black", new Point2D(x, this.gridHeight), 0));
+        }
     }
 
     private void addWall(Scanner s) {
@@ -101,11 +103,11 @@ public class Room {
         return this.roomElements;
     }
 
-    public int getRoomWidth(){
+    public int getRoomWidth() {
         return this.gridWidth;
     }
 
-    public int getRoomHeight(){
+    public int getRoomHeight() {
         return this.gridHeight;
     }
 }
