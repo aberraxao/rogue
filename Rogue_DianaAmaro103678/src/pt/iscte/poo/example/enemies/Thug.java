@@ -18,9 +18,4 @@ public class Thug extends Enemie {
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
     }
-
-    @Override
-    public int getLayer() {
-        return 1;
-    }
 }

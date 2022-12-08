@@ -19,9 +19,4 @@ public class Thief extends Enemie implements Movable {
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
     }
-
-    @Override
-    public int getLayer() {
-        return 1;
-    }
 }

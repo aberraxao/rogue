@@ -1,5 +1,6 @@
 package pt.iscte.poo.example;
 
+import pt.iscte.poo.example.items.Key;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -18,7 +19,7 @@ public class Hero extends GameElement implements Movable {
 
     public void move(Direction d) {
         Point2D newPos = getPosition().plus(d.asVector());
-        List<GameElement> elementList = select(GameEngine.getRoom(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
+        List<GameElement> elementList = selectList(GameEngine.getRoom(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
         action(elementList, newPos);
     }
 
@@ -26,7 +27,7 @@ public class Hero extends GameElement implements Movable {
 
         if (elementList.isEmpty()) {
             if (position.getX() < 0 || position.getX() > GameEngine.getInstance().getGridWidth() || position.getY() < 0 || position.getY() > GameEngine.getInstance().getGridHeight() - 1) {
-                Door door = selectDoor(GameEngine.getRoom(), el -> el.getName().matches("Door.*"));
+                Door door = (Door) select(GameEngine.getRoom(), el -> el.getName().matches("Door.*"));
                 if (door != null) handleDoors(door);
             } else {
                 logger.info(this.getName() + " moved to " + this.getPosition());
@@ -58,13 +59,16 @@ public class Hero extends GameElement implements Movable {
 
     @Override
     public void updateHitPoints(int delta) {
-        this.hitPoints = Math.max(0, getHitPoints() + delta);
+        // TODO: restart or close game
+        setHitPoints(Math.max(0, getHitPoints() + delta));
+        if (getHitPoints() == 0)
+            GameEngine.askUser(getName() + " has died. Do you want to play again?");
     }
 
     @Override
     public void attack(Movable movable) {
         movable.updateHitPoints(-1);
-        logger.info(getName() + " hit " + movable.getName() + " -> new hitpoints: " + movable.getHitPoints());
+        logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 
     @Override
@@ -95,14 +99,14 @@ public class Hero extends GameElement implements Movable {
 
     private void tryKeysOnDoor(Door door) {
 
-        Integer inventoryPos = GameEngine.getInventory().getKeyIdPos(door.getKey());
+        Item keyItem = Inventory.select(GameEngine.getInventory().getList(),
+                el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(door.getKey()));
 
-        if (inventoryPos == -1) {
+        if (keyItem == null) {
             logger.info(this.getName() + " cannot move because there is no key in the inventory to open the door");
         } else {
             logger.info(this.getName() + " opens a door and moves to another room");
-            GameEngine.removeGuiImage(GameEngine.getInventory().getList().get(inventoryPos));
-            GameEngine.getInventory().removeInventory(inventoryPos);
+            GameEngine.removeInventoryItem(keyItem);
             handleNewRoom(door);
         }
     }
@@ -112,7 +116,7 @@ public class Hero extends GameElement implements Movable {
         super.setPosition(door.getPosition());
         GameEngine.updateGui();
         GameEngine.moveToRoom(door.getOtherRoomInt(), door.getPositionOtherRoom());
-        Door otherDoor = selectDoor(GameEngine.getRoom(), el -> el.getPosition().equals(door.getPositionOtherRoom()) && el.getName().equals("DoorClosed"));
+        Door otherDoor = (Door) select(GameEngine.getRoom(), el -> el.getPosition().equals(door.getPositionOtherRoom()) && el.getName().equals("DoorClosed"));
         if (otherDoor != null) otherDoor.openDoor();
         GameEngine.updateGui();
     }

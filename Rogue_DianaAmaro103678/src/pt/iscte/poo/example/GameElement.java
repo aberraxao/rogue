@@ -50,12 +50,13 @@ public abstract class GameElement implements ImageTile {
     public void setLayer(int layer) {
         this.layer = layer;
     }
+
     @Override
     public String toString() {
         return getName() + ": layer " + getLayer() + " on pos " + getPosition();
     }
 
-    static List<GameElement> select(List<GameElement> elements, Predicate<GameElement> filter) {
+    static List<GameElement> selectList(List<GameElement> elements, Predicate<GameElement> filter) {
         List<GameElement> selection = new ArrayList<>();
         for (GameElement el : elements)
             if (filter.test(el))
@@ -64,10 +65,9 @@ public abstract class GameElement implements ImageTile {
         return selection;
     }
 
-    static Door selectDoor(List<GameElement> elements, Predicate<GameElement> filter) {
+    static GameElement select(List<GameElement> elements, Predicate<GameElement> filter) {
         for (GameElement el : elements)
-            if (filter.test(el)) return (Door) el;
+            if (filter.test(el)) return el;
         return null;
     }
-
 }

@@ -26,8 +26,8 @@ public class GameEngine implements Observer {
     private static Inventory inventory;
     private static Hero hero;
     private int turns;
-    private static Point2D currentHeroPosition = new Point2D(1, 1);
-    private static final int HERO_HIT_POINTS = 10;
+    private static Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
+    private static final int HERO_DEFAULT_HIT_POINTS = 10;
     private static int currentRoom = 0;
 
     private GameEngine() {
@@ -77,29 +77,31 @@ public class GameEngine implements Observer {
     }
 
     public static void setHealthBar() {
-        healthBar = new HealthBar(HERO_HIT_POINTS, GRID_HEIGHT);
+        healthBar = new HealthBar(HERO_DEFAULT_HIT_POINTS, GRID_HEIGHT);
     }
 
     public static void setInventory() {
-        inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight()));
+        inventory = new Inventory(GRID_WIDTH, GRID_HEIGHT+1);
     }
 
     public static void setHero() {
-        hero = new Hero(getCurrentHeroPosition(), HERO_HIT_POINTS);
+        hero = new Hero(HERO_DEFAULT_POSITION, HERO_DEFAULT_HIT_POINTS);
+    }
+    public static void setHeroPosition(Point2D position) {
+        hero.setPosition(position);
     }
 
     public static void setCurrentRoom(int nb) {
         currentRoom = nb;
     }
 
-    public static void setHeroCurrentPosition(Point2D position) {
-        currentHeroPosition = position;
-    }
-
     public static HealthBar getHealthBar() {
         return healthBar;
     }
 
+    public static List<Item> getInventoryList() {
+        return inventory.inventoryList;
+    }
     public static Inventory getInventory() {
         return inventory;
     }
@@ -114,10 +116,6 @@ public class GameEngine implements Observer {
 
     public static int getCurrentRoom() {
         return currentRoom;
-    }
-
-    public static Point2D getCurrentHeroPosition() {
-        return currentHeroPosition;
     }
 
     public static void drawRoom() {
@@ -153,6 +151,9 @@ public class GameEngine implements Observer {
         gui.setMessage(message);
     }
 
+    public static void askUser(String message) {
+        gui.askUser(message);
+    }
     @Override
     public void update(Observed source) {
 
@@ -178,18 +179,23 @@ public class GameEngine implements Observer {
         gui.update();
     }
 
-    public static void removeGuiImage(Item item) {
-        gui.removeImage(item);
+    public static void removeGameElement(GameElement el) {
+        elements.remove(el);
+        gui.removeImage(el);
+    }
+
+    public static void removeInventoryItem(Item it) {
+        inventory.setDefaultInventory(it);
+        gui.removeImage(it);
     }
 
     public static void moveToRoom(int nb, Point2D position) {
-        logger.info("Moved to room " + nb);
+        logger.info("Moved to room " + nb );
         gui.clearImages();
 
         setCurrentRoom(nb);
         setRoom();
-        setHeroCurrentPosition(position);
-        setHero();
+        hero.setPosition(position);
 
         drawGameElements();
     }

@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.example.items.Key;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.ArrayList;
@@ -30,8 +29,14 @@ public class Inventory {
         return this.inventoryList;
     }
 
-    private Item getItem(int position) {
+    private Item select(int position) {
         return this.getList().get(position);
+    }
+
+    static Item select(List<Item> items, Predicate<Item> filter) {
+        for (Item it : items)
+            if (filter.test(it)) return it;
+        return null;
     }
 
     private Item defaultInventoryItem(int position) {
@@ -56,26 +61,17 @@ public class Inventory {
         setDefault(position);
     }
 
+    public void setDefaultInventory(Item it) {
+        it.setName(DEFAULT_ITEM);
+        it.setLayer(DEFAULT_LAYER);
+    }
+
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (getItem(position).getName().equals(DEFAULT_ITEM))
+        if (select(position).getName().equals(DEFAULT_ITEM))
             logger.info("Nothing to be removed");
         else {
-            getItem(position).setPosition(newPosition);
+            select(position).setPosition(newPosition);
             removeInventory(position);
         }
-    }
-
-    boolean inInventory(String itemName) {
-        return getItemPos(this.getList(), el -> el.getName().equals(itemName)) != -1;
-    }
-
-    Integer getKeyIdPos(String keyId) {
-        return getItemPos(this.getList(), el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(keyId));
-    }
-
-    static Integer getItemPos(List<Item> items, Predicate<Item> filter) {
-        for (Item it : items)
-            if (filter.test(it)) return items.indexOf(it);
-        return -1;
     }
 }
