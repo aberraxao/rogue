@@ -10,8 +10,11 @@ public interface Movable {
 
     int getHitPoints();
 
+    String getName();
+
     void setHitPoints(int hitPoints);
 
     void updateHitPoints(int delta);
 
+    void attack(Movable movable);
 }

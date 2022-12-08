@@ -7,10 +7,9 @@ import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
 public class Thug extends Enemie {
-    private int hitPoints = 10;
 
-    public Thug(Point2D position) {
-        super(Thug.class.getSimpleName(), position);
+    public Thug(Point2D position, int hitPoints) {
+        super(Thug.class.getSimpleName(), position, hitPoints);
     }
 
     public void move(Direction d) {
@@ -20,4 +19,8 @@ public class Thug extends Enemie {
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
     }
 
+    @Override
+    public int getLayer() {
+        return 1;
+    }
 }

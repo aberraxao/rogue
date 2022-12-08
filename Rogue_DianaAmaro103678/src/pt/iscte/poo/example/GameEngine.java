@@ -27,7 +27,7 @@ public class GameEngine implements Observer {
     private static Hero hero;
     private int turns;
     private static Point2D currentHeroPosition = new Point2D(1, 1);
-    private static int heroHealthPoints = 10;
+    private static final int HERO_HIT_POINTS = 10;
     private static int currentRoom = 0;
 
     private GameEngine() {
@@ -77,7 +77,7 @@ public class GameEngine implements Observer {
     }
 
     public static void setHealthBar() {
-        healthBar = new HealthBar(heroHealthPoints, GRID_HEIGHT);
+        healthBar = new HealthBar(HERO_HIT_POINTS, GRID_HEIGHT);
     }
 
     public static void setInventory() {
@@ -85,7 +85,7 @@ public class GameEngine implements Observer {
     }
 
     public static void setHero() {
-        hero = new Hero(getCurrentHeroPosition());
+        hero = new Hero(getCurrentHeroPosition(), HERO_HIT_POINTS);
     }
 
     public static void setCurrentRoom(int nb) {

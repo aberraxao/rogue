@@ -77,11 +77,11 @@ public class Room {
                         else
                             yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5));
                     }
-                    case "Bat" -> new Bat(getPoint2D(line, 1, 2));
-                    case "Scorpio" -> new Scorpio(getPoint2D(line, 1, 2));
-                    case "Skeleton" -> new Skeleton(getPoint2D(line, 1, 2));
-                    case "Thief" -> new Thief(getPoint2D(line, 1, 2));
-                    case "Thug" -> new Thug(getPoint2D(line, 1, 2));
+                    case "Bat" -> new Bat(getPoint2D(line, 1, 2), 3);
+                    case "Scorpio" -> new Scorpio(getPoint2D(line, 1, 2), 2);
+                    case "Skeleton" -> new Skeleton(getPoint2D(line, 1, 2), 5);
+                    case "Thief" -> new Thief(getPoint2D(line, 1, 2), 5);
+                    case "Thug" -> new Thug(getPoint2D(line, 1, 2), 10);
                     case "Armor" -> new Armor(getPoint2D(line, 1, 2));
                     case "HealingPotion" -> new HealingPotion(getPoint2D(line, 1, 2));
                     case "Key" -> new Key(getPoint2D(line, 1, 2), line[3]);

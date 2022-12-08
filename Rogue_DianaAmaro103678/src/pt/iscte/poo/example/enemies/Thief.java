@@ -9,10 +9,8 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Thief extends Enemie implements Movable {
 
-    private int hitPoints = 5;
-
-    public Thief(Point2D position) {
-        super(Thief.class.getSimpleName(), position);
+    public Thief(Point2D position, int hitPoints) {
+        super(Thief.class.getSimpleName(), position, hitPoints);
     }
 
     public void move(Direction d) {
@@ -25,20 +23,5 @@ public class Thief extends Enemie implements Movable {
     @Override
     public int getLayer() {
         return 1;
-    }
-
-    @Override
-    public int getHitPoints() {
-        return this.hitPoints;
-    }
-
-    @Override
-    public void setHitPoints(int hitPoints) {
-
-    }
-
-    @Override
-    public void updateHitPoints(int delta) {
-
     }
 }

@@ -9,10 +9,11 @@ import static pt.iscte.poo.example.GameEngine.logger;
 
 public class Hero extends GameElement implements Movable {
 
-    private int hitPoints = 10;
+    private int hitPoints;
 
-    public Hero(Point2D position) {
+    public Hero(Point2D position, int hitPoints) {
         super(Hero.class.getSimpleName(), position);
+        this.hitPoints = hitPoints;
     }
 
     public void move(Direction d) {
@@ -41,7 +42,7 @@ public class Hero extends GameElement implements Movable {
             } else if (el.getLayer() == 2) {
                 handleInventory(el, position);
             } else {
-                logger.info(this.getName() + " hit a " + el.getName());
+                this.attack((Enemie) el);
             }
     }
 
@@ -57,7 +58,13 @@ public class Hero extends GameElement implements Movable {
 
     @Override
     public void updateHitPoints(int delta) {
-        this.hitPoints = this.hitPoints + delta;
+        this.hitPoints = Math.max(0, getHitPoints() + delta);
+    }
+
+    @Override
+    public void attack(Movable movable) {
+        movable.updateHitPoints(-1);
+        logger.info(getName() + " hit " + movable.getName() + " -> new hitpoints: " + movable.getHitPoints());
     }
 
     @Override

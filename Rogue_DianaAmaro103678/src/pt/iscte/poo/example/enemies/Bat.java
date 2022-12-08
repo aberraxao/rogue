@@ -8,10 +8,8 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Bat extends Enemie {
 
-    private int hitPoints = 3;
-
-    public Bat(Point2D position) {
-        super(Bat.class.getSimpleName(), position);
+    public Bat(Point2D position, int hitPoints) {
+        super(Bat.class.getSimpleName(), position, hitPoints);
     }
 
     public void move(Direction d) {
@@ -19,5 +17,10 @@ public class Bat extends Enemie {
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
+    }
+
+    @Override
+    public int getLayer() {
+        return 1;
     }
 }

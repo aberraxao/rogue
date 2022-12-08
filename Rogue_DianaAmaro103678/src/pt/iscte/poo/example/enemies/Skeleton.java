@@ -8,10 +8,8 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Skeleton extends Enemie {
 
-    private int hitPoints = 5;
-
-    public Skeleton(Point2D position) {
-        super(Skeleton.class.getSimpleName(), position);
+    public Skeleton(Point2D position, int hitPoints) {
+        super(Skeleton.class.getSimpleName(), position, hitPoints);
     }
 
     public void move(Direction d) {
@@ -19,5 +17,10 @@ public class Skeleton extends Enemie {
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
+    }
+
+    @Override
+    public int getLayer() {
+        return 1;
     }
 }
