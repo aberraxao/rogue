@@ -17,15 +17,17 @@ public class Room {
 
     private final int gridWidth;
     private final int gridHeight;
+    private final int roomNb;
 
     List<GameElement> roomItems = new ArrayList<>();
 
-    public Room(String nb, int gridWidth, int gridHeight) {
+    public Room(int nb, int gridWidth, int gridHeight) {
+        this.roomNb = nb;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
 
         try {
-            String roomPath = "rooms/room{NB}.txt".replace("{NB}", nb);
+            String roomPath = String.format("rooms/room%s.txt", nb);
             Scanner s = new Scanner(new File(roomPath));
             addFloor();
             addWall(s);
@@ -95,7 +97,7 @@ public class Room {
         }
     }
 
-    public List<GameElement> getList() {
+    public List<GameElement> getRoom() {
         return this.roomItems;
     }
 }

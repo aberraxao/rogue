@@ -5,20 +5,21 @@ import pt.iscte.poo.utils.Point2D;
 public class Door extends GameElement {
 
     private String key;
-    private String room;
-    private Point2D posRoom;
+    private final String otherRoom;
+    private final Point2D positionOtherRoom;
 
-    public Door(Point2D position, String room, Point2D posRoom, String key) {
-        super("DoorClosed", position);
-        this.room = room;
-        this.posRoom = posRoom;
+    public Door(Point2D positionThisRoom, String otherRoom, Point2D positionOtherRoom, String key) {
+        super("DoorClosed", positionThisRoom);
+        this.otherRoom = otherRoom;
+        this.positionOtherRoom = positionOtherRoom;
         this.key = key;
+        // TODO: check door consistency
     }
 
-    public Door(Point2D position, String room, Point2D posRoom) {
-        super("DoorWay", position);
-        this.room = room;
-        this.posRoom = posRoom;
+    public Door(Point2D positionThisRoom, String otherRoom, Point2D positionOtherRoom) {
+        super("DoorWay", positionThisRoom);
+        this.otherRoom = otherRoom;
+        this.positionOtherRoom = positionOtherRoom;
     }
 
     @Override
@@ -36,5 +37,17 @@ public class Door extends GameElement {
 
     public void openDoor () {
         super.setName("DoorOpen");
+    }
+
+    public String getOtherRoom() {
+        return this.otherRoom.replace("room", "");
+    }
+
+    public int getOtherRoomInt(){
+        return Integer.parseInt(this.otherRoom);
+    }
+
+    public Point2D getPositionOtherRoom() {
+        return positionOtherRoom;
     }
 }

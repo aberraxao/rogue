@@ -27,6 +27,7 @@ public class GameEngine implements Observer {
     private static Inventory inventory;
     private static Hero hero;
     private int turns;
+    private int currentRoom = 0;
 
     public static GameEngine getInstance() {
         if (INSTANCE == null) INSTANCE = new GameEngine();
@@ -41,13 +42,76 @@ public class GameEngine implements Observer {
     }
 
     public void start() {
-        setHero();
-        setRoom("0");
-        setHealth();
-        setInventory();
+        setGameElements();
+        drawGameElements();
 
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
+    }
+
+    private void setGameElements() {
+        setRoom(currentRoom);
+        setHealthBar();
+        setInventory();
+        setHero();
+    }
+
+    private void drawGameElements() {
+        drawRoom(currentRoom);
+        drawHealthBar();
+        drawInventory();
+        drawHero();
+    }
+
+    private static void setHealthBar() {
+        healthBar = new HealthBar(heroHealthPoints, GRID_HEIGHT);
+    }
+
+    public static HealthBar getHealthBar() {
+        return healthBar;
+    }
+
+    public static void drawHealthBar() {
+        for (Health item : healthBar.getList())
+            gui.addImage(item);
+    }
+
+    private static void setInventory() {
+        inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight()));
+    }
+
+    public static Inventory getInventory() {
+        return inventory;
+    }
+
+    public static void drawInventory() {
+        for (Item item : inventory.getList())
+            gui.addImage(item);
+    }
+
+    private static void setRoom(int nb) {
+        elements = new Room(nb, GRID_WIDTH, GRID_HEIGHT).getRoom();
+    }
+
+    public static List<GameElement> getRoom() {
+        return elements;
+    }
+
+    public static void drawRoom(int nb) {
+        for (GameElement room : elements)
+            gui.addImage(room);
+    }
+
+    private static void setHero() {
+        hero = new Hero(new Point2D(1, 1));
+    }
+
+    public static Hero getHero() {
+        return hero;
+    }
+
+    public static void drawHero() {
+        gui.addImage(hero);
     }
 
     public static void updateGui() {
@@ -62,34 +126,6 @@ public class GameEngine implements Observer {
 
     public static void sendMessageToGui(String message) {
         gui.setMessage(message);
-    }
-
-    private static void setHealth() {
-        healthBar = new HealthBar(heroHealthPoints, GRID_HEIGHT);
-        for (Health health : healthBar.getList())
-            gui.addImage(health);
-    }
-
-    private static void setInventory() {
-        inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight()));
-        for (Item item : inventory.getList())
-            gui.addImage(item);
-    }
-
-    private static void setRoom(String nb) {
-        elements = new Room(nb, GRID_WIDTH, GRID_HEIGHT).getList();
-        for (GameElement room : elements)
-            gui.addImage(room);
-    }
-
-    private static void setHero() {
-        hero = new Hero(new Point2D(1, 1));
-        heroHealthPoints = hero.getHitPoints();
-        gui.addImage(hero);
-    }
-
-    public static Inventory getInventory() {
-        return inventory;
     }
 
     @Override
@@ -121,11 +157,9 @@ public class GameEngine implements Observer {
         gui.removeImage(item);
     }
 
-    public static List<GameElement> getElements() {
-        return elements;
-    }
 
-    public static void updateRoom(String nb) {
-        setRoom(nb);
+    public static Room updateRoom(int nb) {
+
+        return new Room(nb, GRID_WIDTH, GRID_HEIGHT);
     }
 }
