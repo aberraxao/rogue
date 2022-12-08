@@ -63,38 +63,36 @@ public class GameEngine implements Observer {
         drawHero();
     }
 
+    private static void setRoom(int nb) {
+        elements = new Room(nb, GRID_WIDTH, GRID_HEIGHT).getRoom();
+    }
+
     private static void setHealthBar() {
         healthBar = new HealthBar(heroHealthPoints, GRID_HEIGHT);
-    }
-
-    public static HealthBar getHealthBar() {
-        return healthBar;
-    }
-
-    public static void drawHealthBar() {
-        for (Health item : healthBar.getList())
-            gui.addImage(item);
     }
 
     private static void setInventory() {
         inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight()));
     }
 
+    private static void setHero() {
+        hero = new Hero(new Point2D(1, 1));
+    }
+
+    public static HealthBar getHealthBar() {
+        return healthBar;
+    }
+
     public static Inventory getInventory() {
         return inventory;
     }
 
-    public static void drawInventory() {
-        for (Item item : inventory.getList())
-            gui.addImage(item);
-    }
-
-    private static void setRoom(int nb) {
-        elements = new Room(nb, GRID_WIDTH, GRID_HEIGHT).getRoom();
-    }
-
     public static List<GameElement> getRoom() {
         return elements;
+    }
+
+    public static Hero getHero() {
+        return hero;
     }
 
     public static void drawRoom(int nb) {
@@ -102,12 +100,14 @@ public class GameEngine implements Observer {
             gui.addImage(room);
     }
 
-    private static void setHero() {
-        hero = new Hero(new Point2D(1, 1));
+    public static void drawHealthBar() {
+        for (Health item : healthBar.getList())
+            gui.addImage(item);
     }
 
-    public static Hero getHero() {
-        return hero;
+    public static void drawInventory() {
+        for (Item item : inventory.getList())
+            gui.addImage(item);
     }
 
     public static void drawHero() {
@@ -157,9 +157,7 @@ public class GameEngine implements Observer {
         gui.removeImage(item);
     }
 
-
     public static Room updateRoom(int nb) {
-
         return new Room(nb, GRID_WIDTH, GRID_HEIGHT);
     }
 }
