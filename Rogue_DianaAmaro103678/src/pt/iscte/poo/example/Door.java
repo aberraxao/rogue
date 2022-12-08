@@ -36,7 +36,7 @@ public class Door extends GameElement {
     }
 
     public void openDoor () {
-        super.setName("DoorOpen");
+        setName("DoorOpen");
     }
 
     public String getOtherRoom() {

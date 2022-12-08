@@ -11,6 +11,7 @@ import static pt.iscte.poo.example.GameEngine.logger;
 public class Hero extends GameElement implements Movable {
 
     private int hitPoints;
+    private final int damage = -1;
 
     public Hero(Point2D position, int hitPoints) {
         super(Hero.class.getSimpleName(), position);
@@ -31,7 +32,7 @@ public class Hero extends GameElement implements Movable {
                 if (door != null) handleDoors(door);
             } else {
                 logger.info(this.getName() + " moved to " + this.getPosition());
-                super.setPosition(position);
+                setPosition(position);
             }
         }
 
@@ -41,7 +42,7 @@ public class Hero extends GameElement implements Movable {
             } else if (el.getName().matches("Door.*")) {
                 handleDoors((Door) el);
             } else if (el.getLayer() == 2) {
-                handleInventory(el, position);
+                addItemToInventory(el, position);
             } else {
                 this.attack((Enemie) el);
             }
@@ -67,7 +68,7 @@ public class Hero extends GameElement implements Movable {
 
     @Override
     public void attack(Movable movable) {
-        movable.updateHitPoints(-1);
+        movable.updateHitPoints(damage);
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 
@@ -76,17 +77,14 @@ public class Hero extends GameElement implements Movable {
         return 3;
     }
 
-    private void handleInventory(GameElement el, Point2D position) {
+    private void addItemToInventory(GameElement el, Point2D position) {
 
         logger.info(this.getName() + " tries to grab the item " + el.getName());
-
         GameEngine.getInventory().addInventory((Item) el);
-        super.setPosition(position);
-        GameEngine.updateGui();
+        setPosition(position);
     }
 
     private void handleDoors(Door door) {
-
         logger.info(this.getName() + " reaches a Door");
 
         if (door.getName().matches("DoorWay|DoorOpen")) {
@@ -113,7 +111,7 @@ public class Hero extends GameElement implements Movable {
 
     private void handleNewRoom(Door door) {
         door.openDoor();
-        super.setPosition(door.getPosition());
+        setPosition(door.getPosition());
         GameEngine.updateGui();
         GameEngine.moveToRoom(door.getOtherRoomInt(), door.getPositionOtherRoom());
         Door otherDoor = (Door) select(GameEngine.getRoom(), el -> el.getPosition().equals(door.getPositionOtherRoom()) && el.getName().equals("DoorClosed"));

@@ -50,7 +50,7 @@ public class Inventory {
                 inventoryList.set(x, item);
                 return;
             }
-        GameEngine.sendMessageToGui("Inventory is full!");
+        logger.info("Inventory is full!");
     }
 
     private void setDefault(int position) {

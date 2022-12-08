@@ -19,7 +19,7 @@ public abstract class Enemie extends GameElement implements Movable {
     public void move(Direction d) {
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
-        if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) super.setPosition(newPos);
+        if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) setPosition(newPos);
     }
 
     public int getHitPoints() {
