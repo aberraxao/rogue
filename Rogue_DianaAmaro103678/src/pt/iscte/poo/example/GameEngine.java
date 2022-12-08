@@ -19,7 +19,6 @@ public class GameEngine implements Observer {
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
-    public static int heroHealthPoints;
     private static GameEngine INSTANCE = null;
     private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
     private static List<GameElement> elements = new ArrayList<>();
@@ -27,13 +26,9 @@ public class GameEngine implements Observer {
     private static Inventory inventory;
     private static Hero hero;
     private int turns;
-    private int currentRoom = 0;
-
-    public static GameEngine getInstance() {
-        if (INSTANCE == null) INSTANCE = new GameEngine();
-        logger.info("Game is instanced");
-        return INSTANCE;
-    }
+    private static Point2D currentHeroPosition = new Point2D(1, 1);
+    private static int heroHealthPoints = 10;
+    private static int currentRoom = 0;
 
     private GameEngine() {
         gui.registerObserver(this);
@@ -49,34 +44,55 @@ public class GameEngine implements Observer {
         gui.update();
     }
 
-    private void setGameElements() {
-        setRoom(currentRoom);
+    public static GameEngine getInstance() {
+        if (INSTANCE == null) INSTANCE = new GameEngine();
+        logger.info("Game is instanced");
+        return INSTANCE;
+    }
+
+    public int getGridHeight(){
+        return GRID_HEIGHT;
+    }
+
+    public int getGridWidth(){
+        return GRID_WIDTH;
+    }
+
+    private static void setGameElements() {
+        setRoom();
         setHealthBar();
         setInventory();
         setHero();
     }
 
-    private void drawGameElements() {
-        drawRoom(currentRoom);
+    private static void drawGameElements() {
+        drawRoom();
         drawHealthBar();
         drawInventory();
         drawHero();
     }
 
-    private static void setRoom(int nb) {
-        elements = new Room(nb, GRID_WIDTH, GRID_HEIGHT).getRoom();
+    public static void setRoom() {
+        elements = new Room(getCurrentRoom(), GRID_WIDTH, GRID_HEIGHT).getRoom();
     }
 
-    private static void setHealthBar() {
+    public static void setHealthBar() {
         healthBar = new HealthBar(heroHealthPoints, GRID_HEIGHT);
     }
 
-    private static void setInventory() {
+    public static void setInventory() {
         inventory = new Inventory((int) (gui.getGridDimension().getWidth()), (int) (gui.getGridDimension().getHeight()));
     }
 
-    private static void setHero() {
-        hero = new Hero(new Point2D(1, 1));
+    public static void setHero() {
+        hero = new Hero(getCurrentHeroPosition());
+    }
+
+    public static void setCurrentRoom(int nb) {
+        currentRoom = nb;
+    }
+    public static void setHeroCurrentPosition(Point2D position) {
+        currentHeroPosition = position;
     }
 
     public static HealthBar getHealthBar() {
@@ -95,7 +111,15 @@ public class GameEngine implements Observer {
         return hero;
     }
 
-    public static void drawRoom(int nb) {
+    public static int getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public static Point2D getCurrentHeroPosition() {
+        return currentHeroPosition;
+    }
+
+    public static void drawRoom() {
         for (GameElement room : elements)
             gui.addImage(room);
     }
@@ -157,7 +181,15 @@ public class GameEngine implements Observer {
         gui.removeImage(item);
     }
 
-    public static Room updateRoom(int nb) {
-        return new Room(nb, GRID_WIDTH, GRID_HEIGHT);
+    public static void moveToRoom(int nb, Point2D position) {
+        logger.info("Moved to room " + nb);
+        gui.clearImages();
+
+        setCurrentRoom(nb);
+        setRoom();
+        setHeroCurrentPosition(position);
+        setHero();
+
+        drawGameElements();
     }
 }

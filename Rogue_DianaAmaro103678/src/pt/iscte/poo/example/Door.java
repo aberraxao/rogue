@@ -44,7 +44,7 @@ public class Door extends GameElement {
     }
 
     public int getOtherRoomInt(){
-        return Integer.parseInt(this.otherRoom);
+        return Integer.parseInt(this.getOtherRoom());
     }
 
     public Point2D getPositionOtherRoom() {

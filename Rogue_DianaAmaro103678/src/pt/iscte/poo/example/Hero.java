@@ -24,15 +24,20 @@ public class Hero extends GameElement implements Movable {
     public void action(List<GameElement> elementList, Point2D position) {
 
         if (elementList.isEmpty()) {
-            logger.info(this.getName() + " moved to " + this.getPosition());
-            super.setPosition(position);
+            if (position.getX() < 0 || position.getX() > GameEngine.getInstance().getGridWidth() || position.getY() < 0 || position.getY() > GameEngine.getInstance().getGridHeight() - 1) {
+                Door door = selectDoor(GameEngine.getRoom(), el -> el.getName().matches("Door.*"));
+                if (door != null) handleDoors(door);
+            } else {
+                logger.info(this.getName() + " moved to " + this.getPosition());
+                super.setPosition(position);
+            }
         }
 
         for (GameElement el : elementList)
             if (el.getName().equals("Wall")) {
                 logger.info(this.getName() + " hit a Wall");
             } else if (el.getName().matches("Door.*")) {
-                handleDoors((Door) el, position);
+                handleDoors((Door) el);
             } else if (el.getLayer() == 2) {
                 handleInventory(el, position);
             } else {
@@ -69,39 +74,39 @@ public class Hero extends GameElement implements Movable {
         GameEngine.updateGui();
     }
 
-    private void handleDoors(Door el, Point2D position) {
+    private void handleDoors(Door door) {
 
         logger.info(this.getName() + " reaches a Door");
 
-        if (el.getName().matches("DoorWay|DoorOpen")) {
+        if (door.getName().matches("DoorWay|DoorOpen")) {
             logger.info(this.getName() + " moves to another room");
-            handleNewRoom(el);
-        } else if (el.getName().equals("DoorClosed")) {
-            tryKeysOnDoor(el);
+            handleNewRoom(door);
+        } else if (door.getName().equals("DoorClosed")) {
+            tryKeysOnDoor(door);
         }
     }
 
-    private void tryKeysOnDoor(Door el) {
+    private void tryKeysOnDoor(Door door) {
 
-        Integer inventoryPos = GameEngine.getInventory().getKeyIdPos((el).getKey());
+        Integer inventoryPos = GameEngine.getInventory().getKeyIdPos(door.getKey());
 
         if (inventoryPos == -1) {
             logger.info(this.getName() + " cannot move because there is no key in the inventory to open the door");
         } else {
             logger.info(this.getName() + " opens a door and moves to another room");
-            el.openDoor();
             GameEngine.removeGuiImage(GameEngine.getInventory().getList().get(inventoryPos));
             GameEngine.getInventory().removeInventory(inventoryPos);
-            handleNewRoom(el);
+            handleNewRoom(door);
         }
     }
 
-    private void handleNewRoom(Door el){
-        super.setPosition(el.getPosition());
+    private void handleNewRoom(Door door) {
+        door.openDoor();
+        super.setPosition(door.getPosition());
         GameEngine.updateGui();
-        // Room otherRoom = GameEngine.updateRoom(el.getOtherRoom());
-        GameEngine.updateRoom(el.getOtherRoomInt());
-        super.setPosition(el.getPositionOtherRoom());
+        GameEngine.moveToRoom(door.getOtherRoomInt(), door.getPositionOtherRoom());
+        Door otherDoor = selectDoor(GameEngine.getRoom(), el -> el.getPosition().equals(door.getPositionOtherRoom()) && el.getName().equals("DoorClosed"));
+        if (otherDoor != null) otherDoor.openDoor();
         GameEngine.updateGui();
     }
 }

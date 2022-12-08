@@ -19,7 +19,7 @@ public class Room {
     private final int gridHeight;
     private final int roomNb;
 
-    List<GameElement> roomItems = new ArrayList<>();
+    List<GameElement> roomElements = new ArrayList<>();
 
     public Room(int nb, int gridWidth, int gridHeight) {
         this.roomNb = nb;
@@ -41,7 +41,7 @@ public class Room {
     private void addFloor() {
         for (int x = 0; x != this.gridWidth; x++)
             for (int y = 0; y != this.gridHeight; y++)
-                roomItems.add(new Floor(new Point2D(x, y)));
+                roomElements.add(new Floor(new Point2D(x, y)));
     }
 
     private void addWall(Scanner s) {
@@ -50,7 +50,7 @@ public class Room {
         while (s.hasNextLine() && y <= this.gridHeight) {
             line = s.nextLine();
             for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == '#') roomItems.add(new Wall(new Point2D(x, y)));
+                if (line.charAt(x) == '#') roomElements.add(new Wall(new Point2D(x, y)));
             y++;
         }
         if (y != this.gridHeight + 1) sendMessageToGui("The room height should be " + this.gridHeight);
@@ -90,7 +90,7 @@ public class Room {
                 if (gameElement == null) {
                     sendMessageToGui("A class needs to be defined for " + elName);
                     closeGui();
-                } else roomItems.add(gameElement);
+                } else roomElements.add(gameElement);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new ArrayIndexOutOfBoundsException("The parameters are not well defined for the class " + elName);
             }
@@ -98,6 +98,14 @@ public class Room {
     }
 
     public List<GameElement> getRoom() {
-        return this.roomItems;
+        return this.roomElements;
+    }
+
+    public int getRoomWidth(){
+        return this.gridWidth;
+    }
+
+    public int getRoomHeight(){
+        return this.gridHeight;
     }
 }

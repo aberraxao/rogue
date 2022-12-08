@@ -64,4 +64,10 @@ public abstract class GameElement implements ImageTile {
         return selection;
     }
 
+    static Door selectDoor(List<GameElement> elements, Predicate<GameElement> filter) {
+        for (GameElement el : elements)
+            if (filter.test(el)) return (Door) el;
+        return null;
+    }
+
 }
