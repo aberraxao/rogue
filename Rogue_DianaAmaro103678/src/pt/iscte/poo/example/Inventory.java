@@ -57,10 +57,6 @@ public class Inventory {
         inventoryList.set(position, defaultInventoryItem(position));
     }
 
-    public void removeInventory(int position) {
-        setDefault(position);
-    }
-
     public void setDefaultInventory(Item it) {
         it.setName(DEFAULT_ITEM);
         it.setLayer(DEFAULT_LAYER);
@@ -71,7 +67,8 @@ public class Inventory {
             logger.info("Nothing to be removed");
         else {
             select(position).setPosition(newPosition);
-            removeInventory(position);
+            GameEngine.getRoom().add(select(position));
+            setDefault(position);
         }
     }
 }

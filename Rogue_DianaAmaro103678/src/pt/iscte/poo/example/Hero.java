@@ -11,7 +11,7 @@ import static pt.iscte.poo.example.GameEngine.logger;
 public class Hero extends GameElement implements Movable {
 
     private int hitPoints;
-    private final int damage = -1;
+    private static final int DEFAULT_DAMAGE = -1;
 
     public Hero(Point2D position, int hitPoints) {
         super(Hero.class.getSimpleName(), position);
@@ -68,7 +68,7 @@ public class Hero extends GameElement implements Movable {
 
     @Override
     public void attack(Movable movable) {
-        movable.updateHitPoints(damage);
+        movable.updateHitPoints(DEFAULT_DAMAGE);
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 

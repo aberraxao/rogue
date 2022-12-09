@@ -16,7 +16,7 @@ public abstract class GameElement implements ImageTile {
 
     private Point2D position;
 
-    private int layer = 0;
+    private int layer;
 
     protected GameElement(String name, Point2D position) {
         this.name = name;

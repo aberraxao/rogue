@@ -103,6 +103,10 @@ public class Room {
         return this.roomElements;
     }
 
+    public int getRoomNb(){
+        return this.roomNb;
+    }
+
     public int getRoomWidth() {
         return this.gridWidth;
     }

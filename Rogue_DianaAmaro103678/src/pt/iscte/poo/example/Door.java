@@ -27,10 +27,6 @@ public class Door extends GameElement {
         return 1;
     }
 
-    private boolean hasKey() {
-        return key != null;
-    }
-
     public String getKey() {
         return this.key;
     }
