@@ -13,7 +13,6 @@ public class Door extends GameElement {
         this.otherRoom = otherRoom;
         this.positionOtherRoom = positionOtherRoom;
         this.key = key;
-        // TODO: check door consistency
     }
 
     public Door(Point2D positionThisRoom, String otherRoom, Point2D positionOtherRoom) {

@@ -11,6 +11,7 @@ import pt.iscte.poo.utils.Point2D;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
 import static java.lang.System.exit;
 
 public class GameEngine implements Observer {
@@ -86,7 +87,7 @@ public class GameEngine implements Observer {
     }
 
     public static void setInventory() {
-        inventory = new Inventory(GRID_WIDTH, GRID_HEIGHT+1);
+        inventory = new Inventory();
     }
 
     public static void setHero() {
@@ -101,16 +102,8 @@ public class GameEngine implements Observer {
         currentRoom = nb;
     }
 
-    public static Inventory getInventory() {
-        return inventory;
-    }
-
     public static List<GameElement> getRoomList() {
         return room.getRoomList();
-    }
-
-    public static Hero getHero() {
-        return hero;
     }
 
     public static int getCurrentRoom() {
@@ -189,7 +182,7 @@ public class GameEngine implements Observer {
     }
 
     public static void moveToRoom(int nb, Point2D position) {
-        logger.info("Moved to room " + nb );
+        logger.info(format("Moved to room %d", nb) );
 
         gui.clearImages();
         dungeon.addDungeonRoom(currentRoom, room);

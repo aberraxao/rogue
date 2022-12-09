@@ -25,8 +25,4 @@ public class Dungeon {
     public boolean dungeonHasRoom(int nb) {
         return dungeonRooms.containsKey(nb);
     }
-
-    public void saveDungeonRoom(int nb) {
-
-    }
 }

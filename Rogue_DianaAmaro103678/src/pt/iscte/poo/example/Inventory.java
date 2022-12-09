@@ -13,12 +13,12 @@ public class Inventory {
     private static final int ITEM_MAX = 3;
     private static final String DEFAULT_ITEM = "Black";
     private static final int DEFAULT_LAYER = 1;
-    private static final int inventoryWidth = 10 - ITEM_MAX;
-    private static final int inventoryHeight = 10;
+    private static final int INVENTORY_WIDTH = GameEngine.GRID_WIDTH - ITEM_MAX;
+    private static final int INVENTORY_HEIGHT = GameEngine.GRID_HEIGHT;
 
     static List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
-    public Inventory(int gridWidth, int gridHeight) {
+    public Inventory() {
         for (int x = 0; x < ITEM_MAX; x++)
             inventoryList.add(defaultInventoryItem(x));
     }
@@ -42,13 +42,13 @@ public class Inventory {
     }
 
     private Item defaultInventoryItem(int position) {
-        return new Item(DEFAULT_ITEM, new Point2D(inventoryWidth + position, inventoryHeight), DEFAULT_LAYER);
+        return new Item(DEFAULT_ITEM, new Point2D(INVENTORY_WIDTH + position, INVENTORY_HEIGHT), DEFAULT_LAYER);
     }
 
     public static void addInventory(Item item) {
         for (int x = 0; x < ITEM_MAX; x++)
             if (select(x).getName().equals(DEFAULT_ITEM)) {
-                item.setPosition(new Point2D(inventoryWidth + x, inventoryHeight));
+                item.setPosition(new Point2D(INVENTORY_WIDTH + x, INVENTORY_HEIGHT));
                 inventoryList.set(x, item);
                 return;
             }

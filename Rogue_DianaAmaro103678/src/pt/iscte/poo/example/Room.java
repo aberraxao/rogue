@@ -17,12 +17,10 @@ public class Room {
 
     private final int gridWidth;
     private final int gridHeight;
-    private final int roomNb;
 
     List<GameElement> roomElements = new ArrayList<>();
 
     public Room(int nb, int gridWidth, int gridHeight) {
-        this.roomNb = nb;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
 
@@ -101,17 +99,5 @@ public class Room {
 
     public List<GameElement> getRoomList() {
         return this.roomElements;
-    }
-
-    public int getRoomNb(){
-        return this.roomNb;
-    }
-
-    public int getRoomWidth() {
-        return this.gridWidth;
-    }
-
-    public int getRoomHeight() {
-        return this.gridHeight;
     }
 }
