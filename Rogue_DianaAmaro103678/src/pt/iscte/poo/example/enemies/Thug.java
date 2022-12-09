@@ -12,6 +12,7 @@ public class Thug extends Enemy {
         super(Thug.class.getSimpleName(), position, hitPoints);
     }
 
+    @Override
     public void move(Direction d) {
         // TODO: problema quando vai para a linha dos items
         Vector2D randVector = d.asVector();

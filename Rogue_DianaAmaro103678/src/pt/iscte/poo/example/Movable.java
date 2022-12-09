@@ -23,7 +23,7 @@ public interface Movable {
 
     default boolean hitBorder(Point2D position) {
         logger.info(this.getName() + " hit the border");
-        return position.getX() < 0 || position.getX() > GameEngine.getInstance().getGridWidth()
-                || position.getY() < 0 || position.getY() > GameEngine.getInstance().getGridHeight() - 1;
+        return position.getX() < 0 || position.getX() > GameEngine.getGridWidth()
+                || position.getY() < 0 || position.getY() > GameEngine.getGridHeight() - 1;
     }
 }

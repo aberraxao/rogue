@@ -15,15 +15,9 @@ import static pt.iscte.poo.example.GameEngine.closeGui;
 
 public class Room {
 
-    private final int gridWidth;
-    private final int gridHeight;
-
     List<GameElement> roomElements = new ArrayList<>();
 
-    public Room(int nb, int gridWidth, int gridHeight) {
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
-
+    public Room(int nb) {
         try {
             String roomPath = String.format("rooms/room%s.txt", nb);
             Scanner s = new Scanner(new File(roomPath));
@@ -37,23 +31,26 @@ public class Room {
     }
 
     private void addFloor() {
-        for (int x = 0; x != this.gridWidth; x++) {
-            for (int y = 0; y != this.gridHeight; y++)
+        for (int x = 0; x != GameEngine.getGridWidth(); x++) {
+            for (int y = 0; y != GameEngine.getGridHeight(); y++)
                 roomElements.add(new Floor(new Point2D(x, y)));
-            roomElements.add(new Item("Black", new Point2D(x, this.gridHeight), 0));
+            roomElements.add(new Item("Black", new Point2D(x, GameEngine.getGridHeight()), 0));
         }
     }
 
     private void addWall(Scanner s) {
         int y = 0;
         String line;
-        while (s.hasNextLine() && y <= this.gridHeight) {
+        while (s.hasNextLine() && y <= GameEngine.getGridHeight()) {
             line = s.nextLine();
             for (int x = 0; x < line.length(); x++)
                 if (line.charAt(x) == '#') roomElements.add(new Wall(new Point2D(x, y)));
             y++;
         }
-        if (y != this.gridHeight + 1) sendMessageToGui("The room height should be " + this.gridHeight);
+        if (y != GameEngine.getGridHeight() + 1) {
+            sendMessageToGui("The room height should be " + GameEngine.getGridHeight());
+            GameEngine.closeGui();
+        }
     }
 
     private Point2D getPoint2D(String[] line, int x, int y) {
@@ -99,5 +96,15 @@ public class Room {
 
     public List<GameElement> getRoomList() {
         return this.roomElements;
+    }
+
+    public List<GameElement> getEnemiesList() {
+        return GameElement.selectList(this.roomElements, el -> el.getLayer() == 3);
+    }
+
+    public void moveEnemies() {
+        for (GameElement element : getEnemiesList()) {
+            System.out.println(element);
+        }
     }
 }

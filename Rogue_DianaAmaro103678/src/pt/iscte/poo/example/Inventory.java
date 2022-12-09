@@ -13,8 +13,8 @@ public class Inventory {
     private static final int ITEM_MAX = 3;
     private static final String DEFAULT_ITEM = "Black";
     private static final int DEFAULT_LAYER = 1;
-    private static final int INVENTORY_WIDTH = GameEngine.GRID_WIDTH - ITEM_MAX;
-    private static final int INVENTORY_HEIGHT = GameEngine.GRID_HEIGHT;
+    private static final int INVENTORY_WIDTH = GameEngine.getGridWidth() - ITEM_MAX;
+    private static final int INVENTORY_HEIGHT = GameEngine.getGridHeight();
 
     static List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
@@ -59,7 +59,7 @@ public class Inventory {
         inventoryList.set(position, defaultInventoryItem(position));
     }
 
-    public void setDefaultInventory(Item it) {
+    public static void setDefaultInventory(Item it) {
         it.setName(DEFAULT_ITEM);
         it.setLayer(DEFAULT_LAYER);
     }

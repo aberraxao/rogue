@@ -13,6 +13,7 @@ public class Thief extends Enemy implements Movable {
         super(Thief.class.getSimpleName(), position, hitPoints);
     }
 
+    @Override
     public void move(Direction d) {
         // TODO: problema quando vai para a linha dos items
         Vector2D randVector = d.asVector();

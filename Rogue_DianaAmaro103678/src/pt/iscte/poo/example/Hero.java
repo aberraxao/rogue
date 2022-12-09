@@ -25,19 +25,16 @@ public class Hero extends GameElement implements Movable {
 
     public void move(Direction d) {
         Point2D newPos = getPosition().plus(d.asVector());
-        List<GameElement> elementList = selectList(GameEngine.getRoomList(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
-        action(elementList, newPos);
-    }
 
-    public void action(List<GameElement> elementList, Point2D position) {
+        List<GameElement> elementList = selectList(GameEngine.getRoomList(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
 
         if (elementList.isEmpty()) {
-            if (hitBorder(position)) {
+            if (hitBorder(newPos)) {
                 Door door = (Door) select(GameEngine.getRoomList(), el -> el.getPosition().equals(getPosition()) && el.getName().matches("Door.*"));
-                if (door != null) handleDoors(door);
+                if (door != null) interactWithDoor(door);
             } else {
                 logger.info(this.getName() + " moved to " + this.getPosition());
-                setPosition(position);
+                setPosition(newPos);
             }
         }
 
@@ -45,9 +42,9 @@ public class Hero extends GameElement implements Movable {
             if (el.getName().equals("Wall")) {
                 logger.info(this.getName() + " hit a Wall");
             } else if (el.getName().matches("Door.*")) {
-                handleDoors((Door) el);
+                interactWithDoor((Door) el);
             } else if (el.getLayer() == 2) {
-                addItemToInventory(el, position);
+                addItemToInventory(el, newPos);
             } else {
                 this.attack((Enemy) el);
             }
@@ -86,12 +83,12 @@ public class Hero extends GameElement implements Movable {
         setPosition(position);
     }
 
-    private void handleDoors(Door door) {
+    private void interactWithDoor(Door door) {
         logger.info(this.getName() + " reaches a Door");
 
         if (door.getName().matches("DoorWay|DoorOpen")) {
             logger.info(this.getName() + " moves to another room");
-            handleNewRoom(door);
+            moveToAnotherRoom(door);
         } else if (door.getName().equals("DoorClosed")) {
             tryKeysOnDoor(door);
         }
@@ -105,12 +102,13 @@ public class Hero extends GameElement implements Movable {
             logger.info(this.getName() + " cannot move because there is no key in the inventory to open the door");
         } else {
             logger.info(this.getName() + " opens a door and moves to another room");
-            GameEngine.removeInventoryItem(keyItem);
-            handleNewRoom(door);
+            Inventory.setDefaultInventory(keyItem);
+            GameEngine.removeGameElement(keyItem);
+            moveToAnotherRoom(door);
         }
     }
 
-    private void handleNewRoom(Door door) {
+    private void moveToAnotherRoom(Door door) {
         door.openDoor();
         setPosition(door.getPosition());
         GameEngine.updateGui();

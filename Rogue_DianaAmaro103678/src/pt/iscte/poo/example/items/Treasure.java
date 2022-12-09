@@ -11,6 +11,6 @@ public class Treasure extends Item {
 
     @Override
     public int getLayer(){
-        return 3;
+        return 4;
     }
 }

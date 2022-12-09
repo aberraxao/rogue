@@ -3,6 +3,7 @@ package pt.iscte.poo.example;
 import java.util.List;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
@@ -17,19 +18,19 @@ import static java.lang.System.exit;
 public class GameEngine implements Observer {
 
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static final int GRID_HEIGHT = 10;
-    public static final int GRID_WIDTH = 10;
+    private static final int GRID_HEIGHT = 10;
+    private static final int GRID_WIDTH = 10;
     private static GameEngine INSTANCE = null;
     private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
+    private static final Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
+    private static final int HERO_DEFAULT_HIT_POINTS = 10;
     private static Dungeon dungeon;
     private static HealthBar healthBar;
     private static Inventory inventory;
     private static Hero hero;
-    private static Room room;
     private int turns;
-    private static final Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
-    private static final int HERO_DEFAULT_HIT_POINTS = 10;
-    private static int currentRoom = 0;
+    private static Room room;
+    private static int currRoomNb = 0;
 
     private GameEngine() {
         gui.registerObserver(this);
@@ -51,11 +52,11 @@ public class GameEngine implements Observer {
         return INSTANCE;
     }
 
-    public int getGridHeight() {
+    public static int getGridHeight() {
         return GRID_HEIGHT;
     }
 
-    public int getGridWidth() {
+    public static int getGridWidth() {
         return GRID_WIDTH;
     }
 
@@ -68,18 +69,18 @@ public class GameEngine implements Observer {
     }
 
     private static void drawGameElements() {
-        drawRoom();
-        drawHealthBar();
-        drawInventory();
-        drawHero();
+        drawList(getRoomList());
+        drawList(HealthBar.getList());
+        drawList(Inventory.getList());
+        gui.addImage(hero);
     }
 
     public static void setRoom() {
-        room = new Room(getCurrentRoom(), GRID_WIDTH, GRID_HEIGHT);
+        room = new Room(getCurrRoomNb());
     }
 
     public static void setDungeon() {
-        dungeon = new Dungeon(getCurrentRoom(), room);
+        dungeon = new Dungeon(getCurrRoomNb(), room);
     }
 
     public static void setHealthBar() {
@@ -98,35 +99,21 @@ public class GameEngine implements Observer {
         hero.setPosition(position);
     }
 
-    public static void setCurrentRoom(int nb) {
-        currentRoom = nb;
+    public static void setCurrRoomNb(int nb) {
+        currRoomNb = nb;
     }
 
     public static List<GameElement> getRoomList() {
         return room.getRoomList();
     }
 
-    public static int getCurrentRoom() {
-        return currentRoom;
+    public static int getCurrRoomNb() {
+        return currRoomNb;
     }
 
-    public static void drawRoom() {
-        for (GameElement room : getRoomList())
-            gui.addImage(room);
-    }
-
-    public static void drawHealthBar() {
-        for (Health item : HealthBar.getList())
-            gui.addImage(item);
-    }
-
-    public static void drawInventory() {
-        for (Item item : Inventory.getList())
-            gui.addImage(item);
-    }
-
-    public static void drawHero() {
-        gui.addImage(hero);
+    public static <E> void drawList(List<E> elements) {
+        for (E room : elements)
+            gui.addImage((ImageTile) room);
     }
 
     public static void updateGui() {
@@ -134,7 +121,6 @@ public class GameEngine implements Observer {
     }
 
     public static void closeGui() {
-        // TODO: improve this
         gui.dispose();
         exit(0);
     }
@@ -146,6 +132,7 @@ public class GameEngine implements Observer {
     public static void askUser(String message) {
         gui.askUser(message);
     }
+
     @Override
     public void update(Observed source) {
 
@@ -167,17 +154,13 @@ public class GameEngine implements Observer {
             inventory.removeInventoryIntoPosition(Character.getNumericValue(key) - 1, hero.getPosition());
         }
 
+        room.moveEnemies();
+
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
     }
 
-    public static void removeGameElement(GameElement el) {
-        room.getRoomList().remove(el);
-        gui.removeImage(el);
-    }
-
-    public static void removeInventoryItem(Item it) {
-        inventory.setDefaultInventory(it);
+    public static void removeGameElement(ImageTile it){
         gui.removeImage(it);
     }
 
@@ -185,9 +168,9 @@ public class GameEngine implements Observer {
         logger.info(format("Moved to room %d", nb) );
 
         gui.clearImages();
-        dungeon.addDungeonRoom(currentRoom, room);
+        dungeon.addDungeonRoom(currRoomNb, room);
 
-        setCurrentRoom(nb);
+        setCurrRoomNb(nb);
         if (dungeon.dungeonHasRoom(nb))
             room = dungeon.getDungeonRoom(nb);
         else {
