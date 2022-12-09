@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
@@ -21,12 +20,13 @@ public class GameEngine implements Observer {
     public static final int GRID_WIDTH = 10;
     private static GameEngine INSTANCE = null;
     private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private static List<GameElement> elements = new ArrayList<>();
+    private static Dungeon dungeon;
     private static HealthBar healthBar;
     private static Inventory inventory;
     private static Hero hero;
+    private static Room room;
     private int turns;
-    private static Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
+    private static final Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
     private static final int HERO_DEFAULT_HIT_POINTS = 10;
     private static int currentRoom = 0;
 
@@ -60,6 +60,7 @@ public class GameEngine implements Observer {
 
     private static void setGameElements() {
         setRoom();
+        setDungeon();
         setHealthBar();
         setInventory();
         setHero();
@@ -73,7 +74,11 @@ public class GameEngine implements Observer {
     }
 
     public static void setRoom() {
-        elements = new Room(getCurrentRoom(), GRID_WIDTH, GRID_HEIGHT).getRoom();
+        room = new Room(getCurrentRoom(), GRID_WIDTH, GRID_HEIGHT);
+    }
+
+    public static void setDungeon() {
+        dungeon = new Dungeon(getCurrentRoom(), room);
     }
 
     public static void setHealthBar() {
@@ -87,6 +92,7 @@ public class GameEngine implements Observer {
     public static void setHero() {
         hero = new Hero(HERO_DEFAULT_POSITION, HERO_DEFAULT_HIT_POINTS);
     }
+
     public static void setHeroPosition(Point2D position) {
         hero.setPosition(position);
     }
@@ -95,19 +101,12 @@ public class GameEngine implements Observer {
         currentRoom = nb;
     }
 
-    public static HealthBar getHealthBar() {
-        return healthBar;
-    }
-
-    public static List<Item> getInventoryList() {
-        return inventory.inventoryList;
-    }
     public static Inventory getInventory() {
         return inventory;
     }
 
-    public static List<GameElement> getRoom() {
-        return elements;
+    public static List<GameElement> getRoomList() {
+        return room.getRoomList();
     }
 
     public static Hero getHero() {
@@ -119,17 +118,17 @@ public class GameEngine implements Observer {
     }
 
     public static void drawRoom() {
-        for (GameElement room : elements)
+        for (GameElement room : getRoomList())
             gui.addImage(room);
     }
 
     public static void drawHealthBar() {
-        for (Health item : healthBar.getList())
+        for (Health item : HealthBar.getList())
             gui.addImage(item);
     }
 
     public static void drawInventory() {
-        for (Item item : inventory.getList())
+        for (Item item : Inventory.getList())
             gui.addImage(item);
     }
 
@@ -180,7 +179,7 @@ public class GameEngine implements Observer {
     }
 
     public static void removeGameElement(GameElement el) {
-        elements.remove(el);
+        room.getRoomList().remove(el);
         gui.removeImage(el);
     }
 
@@ -191,12 +190,19 @@ public class GameEngine implements Observer {
 
     public static void moveToRoom(int nb, Point2D position) {
         logger.info("Moved to room " + nb );
+
         gui.clearImages();
+        dungeon.addDungeonRoom(currentRoom, room);
 
         setCurrentRoom(nb);
-        setRoom();
-        hero.setPosition(position);
+        if (dungeon.dungeonHasRoom(nb))
+            room = dungeon.getDungeonRoom(nb);
+        else {
+            setRoom();
+            dungeon.addDungeonRoom(nb, room);
+        }
 
+        hero.setPosition(position);
         drawGameElements();
     }
 }

@@ -11,7 +11,7 @@ public class HealthBar {
     int healthMax;
     double healthPoints;
 
-    List<Health> healthList = new ArrayList<>(HEALTH_MAX_POS);
+    static List<Health> healthList = new ArrayList<>(HEALTH_MAX_POS);
 
     public HealthBar(int healthMax, int gridHeight) {
         this.healthMax = healthMax;
@@ -46,7 +46,7 @@ public class HealthBar {
         }
     }
 
-    public List<Health> getList() {
-        return this.healthList;
+    public static List<Health> getList() {
+        return healthList;
     }
 }

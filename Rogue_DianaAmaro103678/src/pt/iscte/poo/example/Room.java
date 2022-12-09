@@ -99,7 +99,7 @@ public class Room {
         }
     }
 
-    public List<GameElement> getRoom() {
+    public List<GameElement> getRoomList() {
         return this.roomElements;
     }
 
