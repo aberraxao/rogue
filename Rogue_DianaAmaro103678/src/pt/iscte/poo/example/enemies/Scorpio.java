@@ -14,11 +14,11 @@ public class Scorpio extends Enemy {
     @Override
     public void move() {
         Hero hero = GameEngine.getInstance().getHero();
-        setPosition(moveTowardsHero(hero.getPosition()));
+        Point2D newPos = moveTowardsHero(hero.getPosition());
 
-        if (getPosition().distanceTo(hero.getPosition()) == 0) {
+        if (newPos.distanceTo(hero.getPosition()) == 0) {
             hero.setIsPoisoned(true);
             attack(hero, -1);
-        }
+        } else setPosition(newPos);
     }
 }

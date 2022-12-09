@@ -69,7 +69,6 @@ public class Inventory {
             getItem(position).setPosition(newPosition);
             GameEngine.getInstance().getRoom().addElementToRoom(getItem(position));
             GameEngine.getInstance().getInventory().getList().set(position, defaultInventoryItem(position));
-            // TODO: check bug
         }
     }
 

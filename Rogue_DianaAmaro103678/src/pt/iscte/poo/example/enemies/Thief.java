@@ -4,12 +4,12 @@ import pt.iscte.poo.example.Enemy;
 import pt.iscte.poo.example.GameEngine;
 import pt.iscte.poo.example.Hero;
 import pt.iscte.poo.example.Movable;
-import pt.iscte.poo.gui.ImageMatrixGUI;
-import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.utils.Vector2D;
+import pt.iscte.poo.example.Item;
 
 public class Thief extends Enemy implements Movable {
+
+    private Item robbedItem;
 
     public Thief(Point2D position, int hitPoints) {
         super(Thief.class.getSimpleName(), position, hitPoints);
@@ -17,11 +17,11 @@ public class Thief extends Enemy implements Movable {
 
     @Override
     public void move() {
-        // TODO: problema quando vai para a linha dos items
         Hero hero = GameEngine.getInstance().getHero();
-        Direction d = Direction.UP;
-        Vector2D randVector = d.asVector();
-        Point2D newPos = getPosition().plus(randVector);
-        if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) setPosition(newPos);
+        Point2D newPos = moveTowardsHero(hero.getPosition());
+
+        if (newPos.distanceTo(hero.getPosition()) == 0) {
+            // To implement
+        } else setPosition(newPos);
     }
 }

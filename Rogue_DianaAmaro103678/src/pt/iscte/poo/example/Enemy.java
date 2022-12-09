@@ -53,7 +53,6 @@ public abstract class Enemy extends GameElement implements Movable {
     }
 
     public Point2D moveTowardsHero(Point2D heroPosition) {
-        // TODO: check for walls
         int minDistance = GameEngine.getInstance().getGridWidth();
         Point2D minDistancePoint = getPosition();
 

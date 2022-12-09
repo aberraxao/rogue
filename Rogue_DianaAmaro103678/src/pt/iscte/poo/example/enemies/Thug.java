@@ -14,10 +14,12 @@ public class Thug extends Enemy {
     @Override
     public void move() {
         Hero hero = GameEngine.getInstance().getHero();
-        setPosition(moveTowardsHero(hero.getPosition()));
+        Point2D newPos = moveTowardsHero(hero.getPosition());
 
-        if (getPosition().distanceTo(hero.getPosition()) == 0 && Math.random() > 0.7) {
-            attack(hero, -3);
-        }
+        if (newPos.distanceTo(hero.getPosition()) == 0) {
+            if (Math.random() > 0.7)
+                attack(hero, -3);
+        } else
+            setPosition(newPos);
     }
 }

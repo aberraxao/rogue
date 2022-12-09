@@ -25,11 +25,12 @@ public class Bat extends Enemy {
             }
         }
 
-        setPosition(newPos);
-        if (getPosition().distanceTo(hero.getPosition()) == 0 && Math.random() > 0.5) {
-            attack(hero, -1);
-            // TODO: check health points from bat
-            this.updateHitPoints(1);
-        }
+        if (newPos.distanceTo(hero.getPosition()) == 0) {
+            if (Math.random() > 0.5) {
+                attack(hero, -1);
+                this.updateHitPoints(1);
+            }
+        } else
+            setPosition(newPos);
     }
 }
