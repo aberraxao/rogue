@@ -16,7 +16,7 @@ public class Inventory {
     private final int inventoryWidth;
     private final int inventoryHeight;
 
-    List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
+    static List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
     public Inventory(int gridWidth, int gridHeight) {
         this.inventoryWidth = gridWidth - ITEM_MAX;
@@ -25,18 +25,22 @@ public class Inventory {
             inventoryList.add(defaultInventoryItem(x));
     }
 
-    public List<Item> getList() {
-        return this.inventoryList;
+    public static List<Item> getList() {
+        return inventoryList;
     }
 
     private Item select(int position) {
-        return this.getList().get(position);
+        return getList().get(position);
     }
 
     static Item select(List<Item> items, Predicate<Item> filter) {
         for (Item it : items)
             if (filter.test(it)) return it;
         return null;
+    }
+
+    public static boolean inInventory(String itemName) {
+        return select(getList(), el -> el.getName().equals(itemName)) != null;
     }
 
     private Item defaultInventoryItem(int position) {

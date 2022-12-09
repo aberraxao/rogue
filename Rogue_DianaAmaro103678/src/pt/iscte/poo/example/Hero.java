@@ -68,7 +68,10 @@ public class Hero extends GameElement implements Movable {
 
     @Override
     public void attack(Movable movable) {
-        movable.updateHitPoints(DEFAULT_DAMAGE);
+        if (Inventory.inInventory("Sword"))
+            movable.updateHitPoints(2 * DEFAULT_DAMAGE);
+        else
+            movable.updateHitPoints(DEFAULT_DAMAGE);
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 
