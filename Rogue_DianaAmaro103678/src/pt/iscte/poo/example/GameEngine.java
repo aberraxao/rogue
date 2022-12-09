@@ -103,9 +103,11 @@ public class GameEngine implements Observer {
     public static Hero getHero() {
         return hero;
     }
+
     public static int getHeroMaxHitPoints() {
         return HERO_MAX_HIT_POINTS;
     }
+
     public static int getScore() {
         return score;
     }
@@ -185,17 +187,26 @@ public class GameEngine implements Observer {
         gui.update();
 
         if (hero.getHitPoints() == 0) {
-            String user = GameEngine.askUser("GAME OVER. Insert you name to save the score!");
-            logger.info(user + " got the score " + GameEngine.getScore());
-            // TODO: save scores
-            //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
-            // if (((ImageMatrixGUI) source).wasWindowClosed())
-            GameEngine.closeGui();
-            // else {
-            //    gui.dispose();
-            //    gui = ImageMatrixGUI.getInstance();
-            //    GameEngine.getInstance().start();
+            handleEngGame(false);
         }
+    }
+
+    public static void handleEngGame(boolean won) {
+        String user;
+        if (won)
+            user = GameEngine.askUser("YOU WON. Insert you name to save the score!");
+        else
+            user = GameEngine.askUser("GAME OVER. Insert you name to save the score!");
+        logger.info(user + " got the score " + GameEngine.getScore());
+        // TODO: save scores
+        //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
+        // if (((ImageMatrixGUI) source).wasWindowClosed())
+        GameEngine.closeGui();
+        // else {
+        //    gui.dispose();
+        //    gui = ImageMatrixGUI.getInstance();
+        //    GameEngine.getInstance().start();
+
     }
 
     public static void removeGameElement(GameElement el) {

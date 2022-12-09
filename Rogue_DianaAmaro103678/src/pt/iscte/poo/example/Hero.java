@@ -89,7 +89,9 @@ public class Hero extends GameElement implements Movable {
 
     private void interactWithElements(List<GameElement> elementList, Point2D position) {
         for (GameElement el : elementList)
-            if (el.getName().equals("Wall")) {
+            if (el.getName().equals("Treasure")) {
+                handleEngGame(true);
+            } else if (el.getName().equals("Wall")) {
                 logger.info(this.getName() + " hit a Wall");
             } else if (el.getName().matches("Door.*")) {
                 interactWithDoor((Door) el);
