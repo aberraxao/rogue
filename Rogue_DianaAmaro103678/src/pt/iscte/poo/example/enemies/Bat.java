@@ -14,12 +14,16 @@ public class Bat extends Enemy {
 
     @Override
     public void move() {
-        Hero hero = GameEngine.getHero();
+        Hero hero = GameEngine.getInstance().getHero();
         Point2D newPos;
         if (Math.random() > 0.5)
             newPos = moveTowardsHero(hero.getPosition());
-        else
+        else {
             newPos = getPosition().plus(Direction.random().asVector());
+            if (!positionEmpty(newPos)) {
+                newPos = getPosition();
+            }
+        }
 
         setPosition(newPos);
         if (getPosition().distanceTo(hero.getPosition()) == 0 && Math.random() > 0.5) {

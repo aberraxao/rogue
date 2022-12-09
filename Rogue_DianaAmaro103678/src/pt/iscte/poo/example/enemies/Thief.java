@@ -1,6 +1,8 @@
 package pt.iscte.poo.example.enemies;
 
 import pt.iscte.poo.example.Enemy;
+import pt.iscte.poo.example.GameEngine;
+import pt.iscte.poo.example.Hero;
 import pt.iscte.poo.example.Movable;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
@@ -16,6 +18,7 @@ public class Thief extends Enemy implements Movable {
     @Override
     public void move() {
         // TODO: problema quando vai para a linha dos items
+        Hero hero = GameEngine.getInstance().getHero();
         Direction d = Direction.UP;
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);

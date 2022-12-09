@@ -8,5 +8,4 @@ public class HealingPotion extends Item {
     public HealingPotion(Point2D position) {
         super(HealingPotion.class.getSimpleName(), position);
     }
-
 }

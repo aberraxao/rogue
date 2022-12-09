@@ -11,15 +11,17 @@ import pt.iscte.poo.example.items.*;
 import pt.iscte.poo.utils.Point2D;
 
 import static pt.iscte.poo.example.GameElement.selectList;
-import static pt.iscte.poo.example.GameEngine.sendMessageToGui;
-import static pt.iscte.poo.example.GameEngine.closeGui;
 
 public class Room {
 
-    List<GameElement> roomElements = new ArrayList<>();
+    private int nb;
+    private final int roomHeight = GameEngine.getInstance().getGridHeight();
+    private final int roomWidth = GameEngine.getInstance().getGridWidth();
+    private List<GameElement> roomElementsList = new ArrayList<>();
 
     public Room(int nb) {
         try {
+            this.nb = nb;
             String roomPath = String.format("rooms/room%s.txt", nb);
             Scanner s = new Scanner(new File(roomPath));
             addFloor();
@@ -27,30 +29,7 @@ public class Room {
             addElement(s);
             s.close();
         } catch (FileNotFoundException e) {
-            sendMessageToGui("Room " + nb + " not found.");
-        }
-    }
-
-    private void addFloor() {
-        for (int x = 0; x != GameEngine.getGridWidth(); x++) {
-            for (int y = 0; y != GameEngine.getGridHeight(); y++)
-                roomElements.add(new Floor(new Point2D(x, y)));
-            roomElements.add(new Item("Black", new Point2D(x, GameEngine.getGridHeight()), 0));
-        }
-    }
-
-    private void addWall(Scanner s) {
-        int y = 0;
-        String line;
-        while (s.hasNextLine() && y <= GameEngine.getGridHeight()) {
-            line = s.nextLine();
-            for (int x = 0; x < line.length(); x++)
-                if (line.charAt(x) == '#') roomElements.add(new Wall(new Point2D(x, y)));
-            y++;
-        }
-        if (y != GameEngine.getGridHeight() + 1) {
-            sendMessageToGui("The room height should be " + GameEngine.getGridHeight());
-            GameEngine.closeGui();
+            GameEngine.getInstance().sendMessageToGui("Room " + nb + " not found.");
         }
     }
 
@@ -58,8 +37,34 @@ public class Room {
         return new Point2D(Integer.parseInt(line[x]), Integer.parseInt(line[y]));
     }
 
-    private void addElement(Scanner s) {
+    public void addElementToRoom(GameElement el){
+        roomElementsList.add(el);
+    }
 
+    private void addFloor() {
+        for (int x = 0; x != roomWidth; x++) {
+            for (int y = 0; y != roomHeight; y++)
+                addElementToRoom(new Floor(new Point2D(x, y)));
+            addElementToRoom(new Item("Black", new Point2D(x, roomHeight), 0));
+        }
+    }
+
+    private void addWall(Scanner s) {
+        int y = 0;
+        String line;
+        while (s.hasNextLine() && y <= roomHeight) {
+            line = s.nextLine();
+            for (int x = 0; x < line.length(); x++)
+                if (line.charAt(x) == '#') addElementToRoom(new Wall(new Point2D(x, y)));
+            y++;
+        }
+        if (y != roomHeight + 1) {
+            GameEngine.getInstance().sendMessageToGui("The room measures should be " + roomHeight + " x " + roomWidth);
+            GameEngine.getInstance().closeGui();
+        }
+    }
+
+    private void addElement(Scanner s) {
         while (s.hasNextLine()) {
 
             String[] line = s.nextLine().split(",");
@@ -70,8 +75,7 @@ public class Room {
                     case "Door" -> {
                         if (line.length == 7)
                             yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5), line[6]);
-                        else
-                            yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5));
+                        else yield new Door(getPoint2D(line, 1, 2), line[3], getPoint2D(line, 4, 5));
                     }
                     case "Bat" -> new Bat(getPoint2D(line, 1, 2), 3);
                     case "Scorpio" -> new Scorpio(getPoint2D(line, 1, 2), 2);
@@ -86,26 +90,33 @@ public class Room {
                     default -> null;
                 };
                 if (gameElement == null) {
-                    sendMessageToGui("A class needs to be defined for " + elName);
-                    closeGui();
-                } else roomElements.add(gameElement);
+                    GameEngine.getInstance().sendMessageToGui("A class needs to be defined for " + elName);
+                    GameEngine.getInstance().closeGui();
+                } else addElementToRoom(gameElement);
             } catch (ArrayIndexOutOfBoundsException e) {
                 throw new ArrayIndexOutOfBoundsException("The parameters are not well defined for the class " + elName);
             }
         }
     }
 
-    public List<GameElement> getRoomList() {
-        return this.roomElements;
+    public int getNb() {
+        return this.nb;
     }
 
+    public List<GameElement> getRoomElementsList() {
+        return this.roomElementsList;
+    }
 
-    public static List<GameElement> getEnemiesList() {
-        return selectList(GameEngine.getRoomList(), el -> el.getLayer() == 3);
+    public List<GameElement> getEnemiesList() {
+        return selectList(this.roomElementsList, el -> el instanceof Enemy);
     }
 
     public void moveEnemies() {
         for (GameElement el : getEnemiesList())
             ((Enemy) el).move();
+    }
+
+    public void removeElement(GameElement el) {
+        roomElementsList.remove(el);
     }
 }

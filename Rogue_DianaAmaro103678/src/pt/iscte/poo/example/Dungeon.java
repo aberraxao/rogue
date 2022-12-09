@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Dungeon {
 
-    static HashMap<Integer, Room> dungeonRooms = new HashMap<>();
+    HashMap<Integer, Room> dungeonRooms = new HashMap<>();
 
     public Dungeon(int nb, Room room) {
         addDungeonRoom(nb, room);

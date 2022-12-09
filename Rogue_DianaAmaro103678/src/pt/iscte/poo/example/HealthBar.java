@@ -9,7 +9,7 @@ public class HealthBar {
 
     private static final int HEALTH_MAX_POS = 5;
     int healthMax;
-    double healthPoints;
+    static double healthPoints;
 
     static List<Health> healthList = new ArrayList<>(HEALTH_MAX_POS);
 
@@ -20,29 +20,18 @@ public class HealthBar {
             healthList.add(new Health(new Point2D(x, gridHeight)));
     }
 
-    public double getHealth() {
-        return this.healthPoints;
+    private static double getHealthPoints(){
+        return GameEngine.getInstance().getHero().getHitPoints();
     }
 
-    public void addHealth(int delta) {
-        // TODO: melhorar o update
-        this.healthPoints = Math.min(healthPoints + delta, healthMax);
-        updateHealth();
-    }
-
-    public void removeHealth(int delta) {
-        this.healthPoints = Math.max(healthPoints + delta, 0);
-        updateHealth();
-    }
-
-    public void updateHealth() {
+    public static void updateHealth() {
         for (Health health : healthList) {
-            if (health.getPosition().getY() < this.healthPoints / 2)
-                health.setName("Green");
-            else if (health.getPosition().getY() == (int) this.healthPoints / 2)
-                health.setName("RedGreen");
-            else
+            if ( getList().indexOf(health) >= (getHealthPoints() /2-1))
                 health.setName("Red");
+            else if ( (getList().indexOf(health)) >= (int)(getHealthPoints() /2-1))
+                health.setName("GreenRed");
+            else
+                health.setName("Green");
         }
     }
 

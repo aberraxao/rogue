@@ -1,7 +1,6 @@
 package pt.iscte.poo.example;
 
 public interface Movable {
-
     void move();
 
     int getLayer();

@@ -57,17 +57,17 @@ public abstract class GameElement implements ImageTile {
         return getName() + ": layer " + getLayer() + " on pos " + getPosition();
     }
 
-    static List<GameElement> selectList(List<GameElement> elements, Predicate<GameElement> filter) {
-        List<GameElement> selection = new ArrayList<>();
-        for (GameElement el : elements)
+    static <E> List<E> selectList(List<E> elements, Predicate<E> filter) {
+        List<E> selection = new ArrayList<>();
+        for (E el : elements)
             if (filter.test(el))
                 selection.add(el);
 
         return selection;
     }
 
-    static GameElement select(List<GameElement> elements, Predicate<GameElement> filter) {
-        for (GameElement el : elements)
+    static <E> E select(List<E> elements, Predicate<E> filter) {
+        for (E el : elements)
             if (filter.test(el)) return el;
         return null;
     }

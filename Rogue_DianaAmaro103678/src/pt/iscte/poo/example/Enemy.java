@@ -40,8 +40,9 @@ public abstract class Enemy extends GameElement implements Movable {
         // TODO: fix this
         setHitPoints(Math.min(MAX_HITPOINTS, Math.max(0, getHitPoints() + delta)));
         if (getHitPoints() == 0) {
-            GameEngine.setHeroPosition(getPosition());
-            GameEngine.removeGameElement(this);
+            logger.info("Hero killed " + getHitPoints());
+            GameEngine.getInstance().getHero().setPosition(getPosition());
+            GameEngine.getInstance().removeGameElement(this);
         }
     }
 
@@ -52,20 +53,23 @@ public abstract class Enemy extends GameElement implements Movable {
     }
 
     public Point2D moveTowardsHero(Point2D heroPosition) {
-
         // TODO: check for walls
+        int minDistance = GameEngine.getInstance().getGridWidth();
+        Point2D minDistancePoint = getPosition();
 
-        int minDistance = GameEngine.getGridWidth();
-        Point2D minDistancePoint = null;
-
-        List<Point2D> neighbourhood = getPosition().getWideNeighbourhoodPoints();
+        List<Point2D> neighbourhood = minDistancePoint.getWideNeighbourhoodPoints();
 
         for (Point2D neighbour : neighbourhood)
-            if (neighbour.distanceTo(heroPosition) <= minDistance) {
+            if (neighbour.distanceTo(heroPosition) <= minDistance && positionEmpty(neighbour)) {
                 minDistance = neighbour.distanceTo(heroPosition);
                 minDistancePoint = neighbour;
             }
         return minDistancePoint;
+    }
+
+    public boolean positionEmpty(Point2D position) {
+        return selectList(GameEngine.getInstance().getRoom().getRoomElementsList(),
+                el -> el.getPosition().equals(position) && el.getLayer() >= 1).isEmpty();
     }
 
     @Override

@@ -8,9 +8,4 @@ public class Treasure extends Item {
     public Treasure(Point2D position) {
         super(Treasure.class.getSimpleName(), position);
     }
-
-    @Override
-    public int getLayer(){
-        return 4;
-    }
 }

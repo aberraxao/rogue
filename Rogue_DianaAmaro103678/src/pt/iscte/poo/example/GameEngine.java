@@ -18,20 +18,22 @@ import static java.lang.System.exit;
 public class GameEngine implements Observer {
 
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static GameEngine INSTANCE = null;
+    private ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
+    private static final int MAX_HEALTH = 10;
     private static final int GRID_HEIGHT = 10;
     private static final int GRID_WIDTH = 10;
-    private static GameEngine INSTANCE = null;
-    private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private static final Point2D HERO_INITIAL_POSITION = new Point2D(1, 1);
-    private static final int HERO_MAX_HIT_POINTS = 10;
-    private static Dungeon dungeon;
-    private static HealthBar healthBar;
-    private static Inventory inventory;
-    private static Hero hero;
-    private int turns;
-    private static int score;
-    private static Room room;
-    private static int currRoomNb = 0;
+    private Dungeon dungeon;
+    private HealthBar healthBar;
+    private Inventory inventory;
+    private Hero hero;
+    private Room room;
+
+    public static GameEngine getInstance() {
+        if (INSTANCE == null) INSTANCE = new GameEngine();
+        logger.info("Game is instanced");
+        return INSTANCE;
+    }
 
     private GameEngine() {
         gui.registerObserver(this);
@@ -40,117 +42,83 @@ public class GameEngine implements Observer {
     }
 
     public void start() {
-        setGameElements();
+        setGameElements(0);
         drawGameElements();
 
-        gui.setStatusMessage("ROGUE Starter Package - Turns: " + turns + ", Score: " + score);
+        gui.setStatusMessage("ROGUE Starter Package - Turns: " + hero.getTurns() + ", Score: " + hero.getScore());
         gui.update();
     }
 
-    public static GameEngine getInstance() {
-        if (INSTANCE == null) INSTANCE = new GameEngine();
-        logger.info("Game is instanced");
-        return INSTANCE;
-    }
-
-    public static int getGridHeight() {
-        return GRID_HEIGHT;
-    }
-
-    public static int getGridWidth() {
-        return GRID_WIDTH;
-    }
-
-    private static void setGameElements() {
-        setRoom();
-        setDungeon();
+    private void setGameElements(int nb) {
+        setRoom(nb);
+        setDungeon(nb);
         setHealthBar();
         setInventory();
         setHero();
     }
 
-    private static void drawGameElements() {
-        drawList(getRoomList());
+    private void drawGameElements() {
+        drawList(room.getRoomElementsList());
         drawList(HealthBar.getList());
         drawList(Inventory.getList());
         gui.addImage(hero);
     }
 
-    public static void setRoom() {
-        room = new Room(getCurrRoomNb());
+    public int getGridHeight() {
+        return GRID_HEIGHT;
     }
 
-    public static void setDungeon() {
-        dungeon = new Dungeon(getCurrRoomNb(), room);
+    public int getGridWidth() {
+        return GRID_WIDTH;
     }
 
-    public static void setHealthBar() {
-        healthBar = new HealthBar(HERO_MAX_HIT_POINTS, GRID_HEIGHT);
+    public void setRoom(int nb) {
+        room = new Room(nb);
     }
 
-    public static void setInventory() {
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setDungeon(int nb) {
+        dungeon = new Dungeon(nb, room);
+    }
+
+    public void setHealthBar() {
+        healthBar = new HealthBar(MAX_HEALTH, GRID_HEIGHT);
+    }
+
+    public void setInventory() {
         inventory = new Inventory();
     }
 
-    public static void setHero() {
-        hero = new Hero(HERO_INITIAL_POSITION, HERO_MAX_HIT_POINTS);
+    public void setHero() {
+        hero = new Hero(MAX_HEALTH);
     }
 
-    public static void setHeroPosition(Point2D position) {
-        hero.setPosition(position);
-    }
-
-    public static Hero getHero() {
+    public Hero getHero() {
         return hero;
     }
 
-    public static int getHeroMaxHitPoints() {
-        return HERO_MAX_HIT_POINTS;
-    }
-
-    public static int getScore() {
-        return score;
-    }
-
-    public static void updateScore(int delta) {
-        score += delta;
-    }
-
-    public static void setCurrRoomNb(int nb) {
-        currRoomNb = nb;
-    }
-
-    public static List<GameElement> getRoomList() {
-        return room.getRoomList();
-    }
-
-    public static void setRoomElement(GameElement el) {
-        room.getRoomList().add(el);
-    }
-
-    public static int getCurrRoomNb() {
-        return currRoomNb;
-    }
-
-    public static <E> void drawList(List<E> elements) {
+    public <E> void drawList(List<E> elements) {
         for (E el : elements)
             gui.addImage((ImageTile) el);
     }
 
-    public static void updateGui() {
+    public void updateGui() {
         gui.update();
     }
 
-    public static void closeGui() {
+    public void closeGui() {
         gui.dispose();
         exit(0);
     }
 
-    public static void sendMessageToGui(String message) {
+    public void sendMessageToGui(String message) {
         gui.setMessage(message);
     }
 
-    public static String askUser(String message) {
+    public String askUser(String message) {
         return gui.askUser(message);
     }
 
@@ -159,72 +127,39 @@ public class GameEngine implements Observer {
 
         int key = ((ImageMatrixGUI) source).keyPressed();
 
-        if (key == KeyEvent.VK_RIGHT) {
-            hero.move(Direction.RIGHT);
-            turns++;
-        } else if (key == KeyEvent.VK_LEFT) {
-            hero.move(Direction.LEFT);
-            turns++;
-        } else if (key == KeyEvent.VK_DOWN) {
-            hero.move(Direction.DOWN);
-            turns++;
-        } else if (key == KeyEvent.VK_UP) {
-            hero.move(Direction.UP);
-            turns++;
-        } else if (key >= KeyEvent.VK_1 && key <= KeyEvent.VK_3) {
-            inventory.removeInventoryIntoPosition(Character.getNumericValue(key) - 1, hero.getPosition());
-        } else if (key == KeyEvent.VK_Q) {
-            inventory.useInventoryItem(0);
-        } else if (key == KeyEvent.VK_W) {
-            inventory.useInventoryItem(1);
-        } else if (key == KeyEvent.VK_E) {
-            inventory.useInventoryItem(2);
+        switch (key) {
+            case KeyEvent.VK_RIGHT -> hero.move(Direction.RIGHT);
+            case KeyEvent.VK_LEFT -> hero.move(Direction.LEFT);
+            case KeyEvent.VK_DOWN -> hero.move(Direction.DOWN);
+            case KeyEvent.VK_UP -> hero.move(Direction.UP);
+            case KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3 ->
+                    inventory.removeInventoryIntoPosition(Character.getNumericValue(key) - 1, hero.getPosition());
+            case KeyEvent.VK_Q -> inventory.useInventoryItem(0);
+            case KeyEvent.VK_W -> inventory.useInventoryItem(1);
+            case KeyEvent.VK_E -> inventory.useInventoryItem(2);
+            default -> logger.info("Key not taken into account");
         }
 
-        room.moveEnemies();
-
-        gui.setStatusMessage("ROGUE Starter Package - Turns: " + turns + ", Score: " + score);
+        gui.setStatusMessage("ROGUE Starter Package - Turns: " + hero.getTurns() + ", Score: " + hero.getScore());
         gui.update();
-
-        if (hero.getHitPoints() == 0) {
-            handleEngGame(false);
-        }
+        if (hero.getHitPoints() == 0) handleEndGame(false);
     }
 
-    public static void handleEngGame(boolean won) {
-        String user;
-        if (won)
-            user = GameEngine.askUser("YOU WON. Insert you name to save the score!");
-        else
-            user = GameEngine.askUser("GAME OVER. Insert you name to save the score!");
-        logger.info(user + " got the score " + GameEngine.getScore());
-        // TODO: save scores
-        //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
-        // if (((ImageMatrixGUI) source).wasWindowClosed())
-        GameEngine.closeGui();
-        // else {
-        //    gui.dispose();
-        //    gui = ImageMatrixGUI.getInstance();
-        //    GameEngine.getInstance().start();
-
-    }
-
-    public static void removeGameElement(GameElement el) {
-        room.getRoomList().remove(el);
+    public void removeGameElement(GameElement el) {
+        room.removeElement(el);
         gui.removeImage(el);
     }
 
-    public static void moveToRoom(int nb, Point2D position) {
+    public void moveToRoom(int nb, Point2D position) {
         logger.info(format("Moved to room %d", nb));
 
         gui.clearImages();
-        dungeon.addDungeonRoom(currRoomNb, room);
+        dungeon.addDungeonRoom(room.getNb(), room);
 
-        setCurrRoomNb(nb);
         if (dungeon.dungeonHasRoom(nb))
             room = dungeon.getDungeonRoom(nb);
         else {
-            setRoom();
+            setRoom(nb);
             dungeon.addDungeonRoom(nb, room);
         }
 
@@ -232,4 +167,20 @@ public class GameEngine implements Observer {
         drawGameElements();
     }
 
+    public void handleEndGame(boolean won) {
+        String user;
+        if (won)
+            user = askUser("YOU WON. Insert you name to save the score!");
+        else
+            user = askUser("GAME OVER. Insert you name to save the score!");
+        logger.info(user + " got the score " + hero.getScore());
+        // TODO: save scores
+        //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
+        // if (((ImageMatrixGUI) source).wasWindowClosed())
+        closeGui();
+        // else {
+        //    gui.dispose();
+        //    gui = ImageMatrixGUI.getInstance();
+        //    GameEngine.getInstance().start();
+    }
 }

@@ -1,21 +1,20 @@
 package pt.iscte.poo.example;
 
+import static pt.iscte.poo.example.GameEngine.logger;
+
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static pt.iscte.poo.example.GameEngine.getHero;
-import static pt.iscte.poo.example.GameEngine.logger;
-
 public class Inventory {
 
     private static final int ITEM_MAX = 3;
     private static final String DEFAULT_ITEM = "Black";
     private static final int DEFAULT_LAYER = 1;
-    private static final int INVENTORY_WIDTH = GameEngine.getGridWidth() - ITEM_MAX;
-    private static final int INVENTORY_HEIGHT = GameEngine.getGridHeight();
+    private static final int INVENTORY_WIDTH = GameEngine.getInstance().getGridWidth() - ITEM_MAX;
+    private static final int INVENTORY_HEIGHT = GameEngine.getInstance().getGridHeight();
 
     static List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
@@ -66,7 +65,7 @@ public class Inventory {
             logger.info("Nothing to be removed");
         else {
             getItem(position).setPosition(newPosition);
-            GameEngine.setRoomElement(getItem(position));
+            GameEngine.getInstance().getRoom().addElementToRoom(getItem(position));
             Inventory.getList().set(position, defaultInventoryItem(position));
             // TODO: check bug
         }
@@ -76,8 +75,9 @@ public class Inventory {
         if (getItem(position).getName().equals("HealingPotion")) {
             logger.info(getItem(position).getName() + " has been used");
             setDefaultInventory(getItem(position));
-            getHero().setIsDying(false);
-            getHero().setHitPoints(Math.min(GameEngine.getHeroMaxHitPoints(), getHero().getHitPoints() + 5));
+            Hero hero = GameEngine.getInstance().getHero();
+            hero.setIsPoisoned(false);
+            hero.setHitPoints(Math.min(hero.getMaxHitPoints(), hero.getHitPoints() + 5));
         }
     }
 }
