@@ -22,8 +22,8 @@ public class GameEngine implements Observer {
     private static final int GRID_WIDTH = 10;
     private static GameEngine INSTANCE = null;
     private static ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private static final Point2D HERO_DEFAULT_POSITION = new Point2D(1, 1);
-    private static final int HERO_DEFAULT_HIT_POINTS = 10;
+    private static final Point2D HERO_INITIAL_POSITION = new Point2D(1, 1);
+    private static final int HERO_MAX_HIT_POINTS = 10;
     private static Dungeon dungeon;
     private static HealthBar healthBar;
     private static Inventory inventory;
@@ -85,7 +85,7 @@ public class GameEngine implements Observer {
     }
 
     public static void setHealthBar() {
-        healthBar = new HealthBar(HERO_DEFAULT_HIT_POINTS, GRID_HEIGHT);
+        healthBar = new HealthBar(HERO_MAX_HIT_POINTS, GRID_HEIGHT);
     }
 
     public static void setInventory() {
@@ -93,7 +93,7 @@ public class GameEngine implements Observer {
     }
 
     public static void setHero() {
-        hero = new Hero(HERO_DEFAULT_POSITION, HERO_DEFAULT_HIT_POINTS);
+        hero = new Hero(HERO_INITIAL_POSITION, HERO_MAX_HIT_POINTS);
     }
 
     public static void setHeroPosition(Point2D position) {
@@ -103,7 +103,9 @@ public class GameEngine implements Observer {
     public static Hero getHero() {
         return hero;
     }
-
+    public static int getHeroMaxHitPoints() {
+        return HERO_MAX_HIT_POINTS;
+    }
     public static int getScore() {
         return score;
     }

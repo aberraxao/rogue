@@ -77,6 +77,7 @@ public class Inventory {
             logger.info(getItem(position).getName() + " has been used");
             setDefaultInventory(getItem(position));
             getHero().setIsDying(false);
+            getHero().setHitPoints(Math.min(GameEngine.getHeroMaxHitPoints(), getHero().getHitPoints() + 5));
         }
     }
 }

@@ -6,8 +6,7 @@ import pt.iscte.poo.utils.Point2D;
 
 import java.util.List;
 
-import static pt.iscte.poo.example.GameEngine.logger;
-import static pt.iscte.poo.example.GameEngine.updateScore;
+import static pt.iscte.poo.example.GameEngine.*;
 
 public class Hero extends GameElement implements Movable {
 
@@ -73,7 +72,7 @@ public class Hero extends GameElement implements Movable {
     public void updateHitPoints(int delta) {
         // TODO: restart or close game
         if (Inventory.inInventory("Armor") && Math.random() > 0.5)
-            setHitPoints(Math.max(0, getHitPoints() + delta));
+            setHitPoints(Math.min(GameEngine.getHeroMaxHitPoints(), Math.max(0, getHitPoints() + delta)));
     }
 
     @Override
