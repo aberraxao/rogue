@@ -8,11 +8,13 @@ import static pt.iscte.poo.example.GameEngine.logger;
 
 public abstract class Enemy extends GameElement implements Movable {
 
+    private final int MAX_HITPOINTS;
     private int hitPoints;
     private boolean moveEnable = true;
 
     protected Enemy(String name, Point2D position, int hitPoints) {
         super(name, position);
+        this.MAX_HITPOINTS = hitPoints;
         this.hitPoints = hitPoints;
     }
 
@@ -35,7 +37,8 @@ public abstract class Enemy extends GameElement implements Movable {
 
     @Override
     public void updateHitPoints(int delta) {
-        setHitPoints(Math.max(0, getHitPoints() + delta));
+        // TODO: fix this
+        setHitPoints(Math.min(MAX_HITPOINTS, Math.max(0, getHitPoints() + delta)));
         if (getHitPoints() == 0) {
             GameEngine.setHeroPosition(getPosition());
             GameEngine.removeGameElement(this);

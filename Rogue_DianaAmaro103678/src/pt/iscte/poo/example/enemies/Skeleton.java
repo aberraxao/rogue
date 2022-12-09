@@ -13,6 +13,7 @@ public class Skeleton extends Enemy {
 
     @Override
     public void move() {
+        // TODO: pode andar na diagonal?
         if (isMoveEnable()) {
             Hero hero = GameEngine.getHero();
             Point2D newPos = allowedDirectionTo(hero.getPosition());
