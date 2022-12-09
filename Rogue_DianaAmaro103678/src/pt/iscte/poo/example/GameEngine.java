@@ -31,7 +31,6 @@ public class GameEngine implements Observer {
 
     public static GameEngine getInstance() {
         if (INSTANCE == null) INSTANCE = new GameEngine();
-        logger.info("Game is instanced");
         return INSTANCE;
     }
 
@@ -59,7 +58,7 @@ public class GameEngine implements Observer {
 
     private void drawGameElements() {
         drawList(room.getRoomElementsList());
-        drawList(HealthBar.getList());
+        drawList(healthBar.getList());
         drawList(Inventory.getList());
         gui.addImage(hero);
     }
@@ -87,7 +86,9 @@ public class GameEngine implements Observer {
     public void setHealthBar() {
         healthBar = new HealthBar(MAX_HEALTH, GRID_HEIGHT);
     }
-
+    public HealthBar getHealthBar() {
+        return healthBar;
+    }
     public void setInventory() {
         inventory = new Inventory();
     }
@@ -106,6 +107,7 @@ public class GameEngine implements Observer {
     }
 
     public void updateGui() {
+        resetHealthBar();
         gui.update();
     }
 
@@ -148,6 +150,14 @@ public class GameEngine implements Observer {
     public void removeGameElement(GameElement el) {
         room.removeElement(el);
         gui.removeImage(el);
+    }
+
+    public void resetHealthBar() {
+        // TODO
+        //for (Health el: healthBar.getList())
+        //    gui.removeImage(el);
+
+        drawList(healthBar.getList());
     }
 
     public void moveToRoom(int nb, Point2D position) {

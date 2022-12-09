@@ -120,7 +120,9 @@ public class Hero extends GameElement implements Movable {
         // TODO: restart or close game
         if (Inventory.inInventory("Armor") && Math.random() > 0.5)
             setHitPoints(Math.min(MAX_HITPOINTS, Math.max(0, getHitPoints() + delta)));
-        HealthBar.updateHealth();
+        else
+            setHitPoints(Math.min(MAX_HITPOINTS, Math.max(0, getHitPoints() + delta)));
+        GameEngine.getInstance().getHealthBar().updateHealth();
     }
 
     @Override
