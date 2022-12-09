@@ -46,12 +46,12 @@ public abstract class Enemy extends GameElement implements Movable {
     }
 
     @Override
-    public void attack(Movable movable) {
-        movable.updateHitPoints(-1);
+    public void attack(Movable movable, int hitPoints) {
+        movable.updateHitPoints(hitPoints);
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 
-    public Point2D allowedDirectionTo(Point2D heroPosition) {
+    public Point2D moveTowardsHero(Point2D heroPosition) {
 
         // TODO: check for walls
 

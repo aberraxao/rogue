@@ -16,10 +16,9 @@ public class Skeleton extends Enemy {
         // TODO: pode andar na diagonal?
         if (isMoveEnable()) {
             Hero hero = GameEngine.getHero();
-            Point2D newPos = allowedDirectionTo(hero.getPosition());
-            setPosition(newPos);
+            setPosition(moveTowardsHero(hero.getPosition()));
             if (getPosition().distanceTo(hero.getPosition()) == 0)
-                attack(hero);
+                attack(hero, -1);
         }
         reverseMoveEnable();
     }

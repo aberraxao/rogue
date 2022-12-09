@@ -17,13 +17,13 @@ public class Bat extends Enemy {
         Hero hero = GameEngine.getHero();
         Point2D newPos;
         if (Math.random() > 0.5)
-            newPos = allowedDirectionTo(hero.getPosition());
+            newPos = moveTowardsHero(hero.getPosition());
         else
             newPos = getPosition().plus(Direction.random().asVector());
 
         setPosition(newPos);
         if (getPosition().distanceTo(hero.getPosition()) == 0 && Math.random() > 0.5) {
-            attack(hero);
+            attack(hero, -1);
             // TODO: check health points from bat
             this.updateHitPoints(1);
         }

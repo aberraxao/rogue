@@ -1,7 +1,5 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.utils.Point2D;
-
 public interface Movable {
 
     void move();
@@ -16,5 +14,5 @@ public interface Movable {
 
     void updateHitPoints(int delta);
 
-    void attack(Movable movable);
+    void attack(Movable movable, int hitPoints);
 }
