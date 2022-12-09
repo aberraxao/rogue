@@ -1,12 +1,12 @@
 package pt.iscte.poo.example.enemies;
 
-import pt.iscte.poo.example.Enemie;
+import pt.iscte.poo.example.Enemy;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Bat extends Enemie {
+public class Bat extends Enemy {
 
     public Bat(Point2D position, int hitPoints) {
         super(Bat.class.getSimpleName(), position, hitPoints);

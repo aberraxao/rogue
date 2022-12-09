@@ -44,7 +44,7 @@ public class Hero extends GameElement implements Movable {
             } else if (el.getLayer() == 2) {
                 addItemToInventory(el, position);
             } else {
-                this.attack((Enemie) el);
+                this.attack((Enemy) el);
             }
     }
 

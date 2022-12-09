@@ -1,12 +1,12 @@
 package pt.iscte.poo.example.enemies;
 
-import pt.iscte.poo.example.Enemie;
+import pt.iscte.poo.example.Enemy;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Skeleton extends Enemie {
+public class Skeleton extends Enemy {
 
     public Skeleton(Point2D position, int hitPoints) {
         super(Skeleton.class.getSimpleName(), position, hitPoints);

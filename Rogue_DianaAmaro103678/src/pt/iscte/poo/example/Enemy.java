@@ -7,11 +7,11 @@ import pt.iscte.poo.utils.Vector2D;
 
 import static pt.iscte.poo.example.GameEngine.logger;
 
-public abstract class Enemie extends GameElement implements Movable {
+public abstract class Enemy extends GameElement implements Movable {
 
     private int hitPoints;
 
-    public Enemie(String name, Point2D position, int hitPoints) {
+    protected Enemy(String name, Point2D position, int hitPoints) {
         super(name, position);
         this.hitPoints = hitPoints;
     }
