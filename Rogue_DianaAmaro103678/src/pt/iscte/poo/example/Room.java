@@ -10,6 +10,7 @@ import pt.iscte.poo.example.enemies.*;
 import pt.iscte.poo.example.items.*;
 import pt.iscte.poo.utils.Point2D;
 
+import static pt.iscte.poo.example.GameElement.selectList;
 import static pt.iscte.poo.example.GameEngine.sendMessageToGui;
 import static pt.iscte.poo.example.GameEngine.closeGui;
 
@@ -98,13 +99,13 @@ public class Room {
         return this.roomElements;
     }
 
-    public List<GameElement> getEnemiesList() {
-        return GameElement.selectList(this.roomElements, el -> el.getLayer() == 3);
+
+    public static List<GameElement> getEnemiesList() {
+        return selectList(GameEngine.getRoomList(), el -> el.getLayer() == 3);
     }
 
     public void moveEnemies() {
-        for (GameElement element : getEnemiesList()) {
-            System.out.println(element);
-        }
+        for (GameElement el : getEnemiesList())
+            ((Enemy) el).move();
     }
 }

@@ -27,18 +27,18 @@ public class Inventory {
         return inventoryList;
     }
 
-    private static Item select(int position) {
+    private static Item getItem(int position) {
         return getList().get(position);
     }
 
-    static Item select(Predicate<Item> filter) {
+    static Item getItem(Predicate<Item> filter) {
         for (Item it : Inventory.getList())
             if (filter.test(it)) return it;
         return null;
     }
 
     public static boolean inInventory(String itemName) {
-        return select(el -> el.getName().equals(itemName)) != null;
+        return getItem(el -> el.getName().equals(itemName)) != null;
     }
 
     private Item defaultInventoryItem(int position) {
@@ -47,16 +47,12 @@ public class Inventory {
 
     public static void addInventory(Item item) {
         for (int x = 0; x < ITEM_MAX; x++)
-            if (select(x).getName().equals(DEFAULT_ITEM)) {
+            if (getItem(x).getName().equals(DEFAULT_ITEM)) {
                 item.setPosition(new Point2D(INVENTORY_WIDTH + x, INVENTORY_HEIGHT));
-                inventoryList.set(x, item);
+                Inventory.getList().set(x, item);
                 return;
             }
         logger.info("Inventory is full!");
-    }
-
-    private void setDefault(int position) {
-        inventoryList.set(position, defaultInventoryItem(position));
     }
 
     public static void setDefaultInventory(Item it) {
@@ -65,12 +61,13 @@ public class Inventory {
     }
 
     public void removeInventoryIntoPosition(int position, Point2D newPosition) {
-        if (select(position).getName().equals(DEFAULT_ITEM))
+        if (getItem(position).getName().equals(DEFAULT_ITEM))
             logger.info("Nothing to be removed");
         else {
-            select(position).setPosition(newPosition);
-            GameEngine.getRoomList().add(select(position));
-            setDefault(position);
+            getItem(position).setPosition(newPosition);
+            GameEngine.setRoomElement(getItem(position));
+            Inventory.getList().set(position, defaultInventoryItem(position));
+            // TODO: check bug
         }
     }
 }

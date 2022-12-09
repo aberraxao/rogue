@@ -1,12 +1,14 @@
 package pt.iscte.poo.example;
 
 import pt.iscte.poo.example.items.Key;
+import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.List;
 
 import static pt.iscte.poo.example.GameEngine.logger;
+import static pt.iscte.poo.example.GameEngine.updateScore;
 
 public class Hero extends GameElement implements Movable {
 
@@ -16,6 +18,10 @@ public class Hero extends GameElement implements Movable {
     public Hero(Point2D position, int hitPoints) {
         super(Hero.class.getSimpleName(), position);
         this.hitPoints = hitPoints;
+    }
+
+    public void move() {
+
     }
 
     @Override
@@ -29,11 +35,10 @@ public class Hero extends GameElement implements Movable {
         List<GameElement> elementList = selectList(GameEngine.getRoomList(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
 
         if (elementList.isEmpty()) {
-            if (hitBorder(newPos)) {
+            if (hitWall(newPos)) {
                 Door door = (Door) select(GameEngine.getRoomList(), el -> el.getPosition().equals(getPosition()) && el.getName().matches("Door.*"));
                 if (door != null) interactWithDoor(door);
             } else {
-                logger.info(this.getName() + " moved to " + this.getPosition());
                 setPosition(newPos);
             }
         }
@@ -50,6 +55,11 @@ public class Hero extends GameElement implements Movable {
             }
     }
 
+    private boolean hitWall(Point2D position) {
+        return position.getX() < 0 || position.getX() > GameEngine.getGridWidth()
+                || position.getY() < 0 || position.getY() > GameEngine.getGridHeight() - 1;
+    }
+
     @Override
     public int getHitPoints() {
         return this.hitPoints;
@@ -64,16 +74,17 @@ public class Hero extends GameElement implements Movable {
     public void updateHitPoints(int delta) {
         // TODO: restart or close game
         setHitPoints(Math.max(0, getHitPoints() + delta));
-        if (getHitPoints() == 0)
-            GameEngine.askUser(getName() + " has died. Do you want to play again?");
+        //removeHealth()
     }
 
     @Override
     public void attack(Movable movable) {
+        int oldScore = movable.getHitPoints();
         if (Inventory.inInventory("Sword"))
             movable.updateHitPoints(2 * DEFAULT_DAMAGE);
         else
             movable.updateHitPoints(DEFAULT_DAMAGE);
+        updateScore(oldScore - movable.getHitPoints());
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
     }
 
@@ -96,7 +107,7 @@ public class Hero extends GameElement implements Movable {
 
     private void tryKeysOnDoor(Door door) {
 
-        Item keyItem = Inventory.select(el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(door.getKey()));
+        Item keyItem = Inventory.getItem(el -> el.getName().equals("Key") && ((Key) el).getKeyId().equals(door.getKey()));
 
         if (keyItem == null) {
             logger.info(this.getName() + " cannot move because there is no key in the inventory to open the door");

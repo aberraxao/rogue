@@ -32,11 +32,12 @@ public abstract class GameElement implements ImageTile {
 
     @Override
     public Point2D getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(Point2D position) {
         this.position = position;
+        logger.info(this.getName() + " moved to " + this.getPosition());
     }
 
     public void setName(String name) {

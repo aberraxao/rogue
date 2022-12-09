@@ -29,6 +29,7 @@ public class GameEngine implements Observer {
     private static Inventory inventory;
     private static Hero hero;
     private int turns;
+    private static int score;
     private static Room room;
     private static int currRoomNb = 0;
 
@@ -42,7 +43,7 @@ public class GameEngine implements Observer {
         setGameElements();
         drawGameElements();
 
-        gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
+        gui.setStatusMessage("ROGUE Starter Package - Turns: " + turns + ", Score: " + score);
         gui.update();
     }
 
@@ -99,6 +100,18 @@ public class GameEngine implements Observer {
         hero.setPosition(position);
     }
 
+    public static Hero getHero() {
+        return hero;
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    public static void updateScore(int delta) {
+        score += delta;
+    }
+
     public static void setCurrRoomNb(int nb) {
         currRoomNb = nb;
     }
@@ -107,13 +120,17 @@ public class GameEngine implements Observer {
         return room.getRoomList();
     }
 
+    public static void setRoomElement(GameElement el) {
+        room.getRoomList().add(el);
+    }
+
     public static int getCurrRoomNb() {
         return currRoomNb;
     }
 
     public static <E> void drawList(List<E> elements) {
-        for (E room : elements)
-            gui.addImage((ImageTile) room);
+        for (E el : elements)
+            gui.addImage((ImageTile) el);
     }
 
     public static void updateGui() {
@@ -129,8 +146,8 @@ public class GameEngine implements Observer {
         gui.setMessage(message);
     }
 
-    public static void askUser(String message) {
-        gui.askUser(message);
+    public static String askUser(String message) {
+        return gui.askUser(message);
     }
 
     @Override
@@ -156,16 +173,30 @@ public class GameEngine implements Observer {
 
         room.moveEnemies();
 
-        gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
+        gui.setStatusMessage("ROGUE Starter Package - Turns: " + turns + ", Score: " + score);
         gui.update();
+
+        if (hero.getHitPoints() == 0) {
+            String user = GameEngine.askUser(getHero().getName() + " has died. Insert you name to save the score");
+            logger.info(user + " got the score " + GameEngine.getScore());
+            // TODO: save scores
+            //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
+           // if (((ImageMatrixGUI) source).wasWindowClosed())
+                GameEngine.closeGui();
+           // else {
+            //    gui.dispose();
+            //    gui = ImageMatrixGUI.getInstance();
+            //    GameEngine.getInstance().start();
+            }
     }
 
-    public static void removeGameElement(ImageTile it){
-        gui.removeImage(it);
+    public static void removeGameElement(GameElement el) {
+        room.getRoomList().remove(el);
+        gui.removeImage(el);
     }
 
     public static void moveToRoom(int nb, Point2D position) {
-        logger.info(format("Moved to room %d", nb) );
+        logger.info(format("Moved to room %d", nb));
 
         gui.clearImages();
         dungeon.addDungeonRoom(currRoomNb, room);
@@ -181,4 +212,5 @@ public class GameEngine implements Observer {
         hero.setPosition(position);
         drawGameElements();
     }
+
 }

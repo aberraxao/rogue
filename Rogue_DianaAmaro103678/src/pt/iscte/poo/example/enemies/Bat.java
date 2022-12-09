@@ -13,8 +13,9 @@ public class Bat extends Enemy {
     }
 
     @Override
-    public void move(Direction d) {
+    public void move() {
         // TODO: problema quando vai para a linha dos items
+        Direction d = Direction.UP;
         Vector2D randVector = d.asVector();
         Point2D newPos = getPosition().plus(randVector);
         if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) setPosition(newPos);
