@@ -57,7 +57,7 @@ public abstract class Enemy extends GameElement implements Movable {
         int minDistance = GameEngine.getInstance().getGridWidth();
         Point2D minDistancePoint = getPosition();
 
-        List<Point2D> neighbourhood = minDistancePoint.getWideNeighbourhoodPoints();
+        List<Point2D> neighbourhood = minDistancePoint.getNeighbourhoodPoints();
 
         for (Point2D neighbour : neighbourhood)
             if (neighbour.distanceTo(heroPosition) <= minDistance && positionEmpty(neighbour)) {
