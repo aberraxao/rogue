@@ -41,7 +41,7 @@ public class Hero extends GameElement implements Movable {
     }
 
     public void setScore(int score) {
-        this.score = score;
+        this.score += score;
     }
 
     public int getScore() {

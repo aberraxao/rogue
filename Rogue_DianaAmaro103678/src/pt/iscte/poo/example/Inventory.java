@@ -26,9 +26,11 @@ public class Inventory {
     public List<Item> getList() {
         return inventoryList;
     }
-     public List<Item> resetList() {
+
+    public List<Item> resetList() {
         return inventoryList = new ArrayList<>(ITEM_MAX);
     }
+
     private Item getItem(int position) {
         return getList().get(position);
     }
@@ -69,6 +71,17 @@ public class Inventory {
             getItem(position).setPosition(newPosition);
             GameEngine.getInstance().getRoom().addElementToRoom(getItem(position));
             GameEngine.getInstance().getInventory().getList().set(position, defaultInventoryItem(position));
+        }
+    }
+
+    public Item removeInventory(int position) {
+        if (getItem(position).getName().equals(DEFAULT_ITEM)) {
+            logger.info("Nothing to be removed");
+            return null;
+        } else {
+            Item it = getItem(position);
+            GameEngine.getInstance().getInventory().getList().set(position, defaultInventoryItem(position));
+            return it;
         }
     }
 

@@ -37,7 +37,6 @@ public abstract class Enemy extends GameElement implements Movable {
 
     @Override
     public void updateHitPoints(int delta) {
-        // TODO: fix this
         setHitPoints(Math.min(MAX_HITPOINTS, Math.max(0, getHitPoints() + delta)));
         if (getHitPoints() == 0) {
             logger.info("Hero killed " + getHitPoints());

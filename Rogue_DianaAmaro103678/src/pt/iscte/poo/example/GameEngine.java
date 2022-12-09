@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
@@ -160,6 +159,16 @@ public class GameEngine implements Observer {
         gui.removeImage(el);
     }
 
+    private void printScores() {
+        topScores.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(5)
+                .forEachOrdered(x -> topScores.put(x.getKey(), x.getValue()));
+
+        for (Map.Entry<String, Integer> treeItem : topScores.entrySet())
+            System.out.println("Player " + treeItem.getKey() + ": " + treeItem.getValue());
+    }
+
     public void moveToRoom(int nb, Point2D position) {
         logger.info(format("Moved to room %d", nb));
 
@@ -193,22 +202,15 @@ public class GameEngine implements Observer {
         else
             user = askUser("GAME OVER. Insert you name to save the score!");
         logger.info(user + " got the score " + hero.getScore());
-        gui.setMessage("Press 'ok' to play again. Close the window to leave the game.");
+        gui.setMessage("Press 'ok' to play again. Close the window to see the scores.");
         topScores.put(user, getHero().getScore());
+
         if (gui.wasWindowClosed()) {
-            topScores.entrySet().stream()
-                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                    .limit(5)
-                    .forEachOrdered(x -> topScores.put(x.getKey(), x.getValue()));
-
-            for (String treeKey : topScores.keySet()) {
-                System.out.println("Player " + treeKey + ": " + topScores.get(treeKey));
-
-            }
             closeGui();
         } else {
             clearAll();
             start();
         }
+        printScores();
     }
 }

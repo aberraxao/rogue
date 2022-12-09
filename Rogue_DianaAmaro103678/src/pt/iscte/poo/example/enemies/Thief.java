@@ -7,6 +7,8 @@ import pt.iscte.poo.example.Movable;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.example.Item;
 
+import java.util.Random;
+
 public class Thief extends Enemy implements Movable {
 
     private Item robbedItem;
@@ -22,6 +24,8 @@ public class Thief extends Enemy implements Movable {
 
         if (newPos.distanceTo(hero.getPosition()) == 0) {
             // To implement
+            Random r = new Random();
+            robbedItem = GameEngine.getInstance().getInventory().removeInventory(r.nextInt(2));
         } else setPosition(newPos);
     }
 }
