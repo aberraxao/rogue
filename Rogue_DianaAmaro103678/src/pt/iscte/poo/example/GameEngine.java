@@ -45,22 +45,22 @@ public class GameEngine implements Observer {
         drawGameElements();
 
         gui.setStatusMessage("ROGUE Starter Package - Turns: " + hero.getTurns() + ", Score: " + hero.getScore());
-        gui.update();
+        updateGui();
     }
 
     private void setGameElements(int nb) {
+        setHero();
         setRoom(nb);
         setDungeon(nb);
         setHealthBar();
         setInventory();
-        setHero();
     }
 
     private void drawGameElements() {
+        gui.addImage(hero);
         drawList(room.getRoomElementsList());
         drawList(healthBar.getList());
-        drawList(Inventory.getList());
-        gui.addImage(hero);
+        drawList(inventory.getList());
     }
 
     public int getGridHeight() {
@@ -86,11 +86,17 @@ public class GameEngine implements Observer {
     public void setHealthBar() {
         healthBar = new HealthBar(MAX_HEALTH, GRID_HEIGHT);
     }
+
     public HealthBar getHealthBar() {
         return healthBar;
     }
+
     public void setInventory() {
         inventory = new Inventory();
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void setHero() {
@@ -106,8 +112,15 @@ public class GameEngine implements Observer {
             gui.addImage((ImageTile) el);
     }
 
+    public <E> void clearList(List<E> elements) {
+        for (E el : elements) {
+            room.removeElement((GameElement) el);
+            gui.removeImage((ImageTile) el);
+        }
+    }
+
     public void updateGui() {
-        resetHealthBar();
+        GameEngine.getInstance().getHealthBar().updateHealth();
         gui.update();
     }
 
@@ -143,21 +156,13 @@ public class GameEngine implements Observer {
         }
 
         gui.setStatusMessage("ROGUE Starter Package - Turns: " + hero.getTurns() + ", Score: " + hero.getScore());
-        gui.update();
+        updateGui();
         if (hero.getHitPoints() == 0) handleEndGame(false);
     }
 
     public void removeGameElement(GameElement el) {
         room.removeElement(el);
         gui.removeImage(el);
-    }
-
-    public void resetHealthBar() {
-        // TODO
-        //for (Health el: healthBar.getList())
-        //    gui.removeImage(el);
-
-        drawList(healthBar.getList());
     }
 
     public void moveToRoom(int nb, Point2D position) {
@@ -177,6 +182,15 @@ public class GameEngine implements Observer {
         drawGameElements();
     }
 
+    private void clearAll() {
+        gui.clearImages();
+        hero = null;
+        dungeon = null;
+        room = null;
+        inventory = null;
+        healthBar = null;
+    }
+
     public void handleEndGame(boolean won) {
         String user;
         if (won)
@@ -185,12 +199,12 @@ public class GameEngine implements Observer {
             user = askUser("GAME OVER. Insert you name to save the score!");
         logger.info(user + " got the score " + hero.getScore());
         // TODO: save scores
-        //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
-        // if (((ImageMatrixGUI) source).wasWindowClosed())
-        closeGui();
-        // else {
-        //    gui.dispose();
-        //    gui = ImageMatrixGUI.getInstance();
-        //    GameEngine.getInstance().start();
+        gui.setMessage("Press 'ok' to play again. Close the window to leave the game.");
+        if (gui.wasWindowClosed())
+            closeGui();
+        else {
+            clearAll();
+            start();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 import java.util.ArrayList;
@@ -12,13 +11,13 @@ public class HealthBar {
     private final int healthMax;
     private double healthPoints;
 
-    static List<Health> healthList = new ArrayList<>();
+    List<Health> healthList = new ArrayList<>();
 
     public HealthBar(int healthMax, int gridHeight) {
         this.healthMax = healthMax;
         this.healthPoints = healthMax;
         this.gridHeight = gridHeight;
-        for (int x = 0; x < this.healthMax / 2; x++)
+        for (int x = 0; x < (this.healthMax / 2); x++)
             healthList.add(new Health(new Point2D(x, gridHeight)));
     }
 
@@ -39,5 +38,9 @@ public class HealthBar {
 
     public List<Health> getList() {
         return healthList;
+    }
+
+    public List<Health> resetHealthList() {
+        return healthList = new ArrayList<>();
     }
 }

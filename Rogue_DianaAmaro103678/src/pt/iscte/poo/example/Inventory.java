@@ -16,28 +16,30 @@ public class Inventory {
     private static final int INVENTORY_WIDTH = GameEngine.getInstance().getGridWidth() - ITEM_MAX;
     private static final int INVENTORY_HEIGHT = GameEngine.getInstance().getGridHeight();
 
-    static List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
+    List<Item> inventoryList = new ArrayList<>(ITEM_MAX);
 
     public Inventory() {
         for (int x = 0; x < ITEM_MAX; x++)
             inventoryList.add(defaultInventoryItem(x));
     }
 
-    public static List<Item> getList() {
+    public List<Item> getList() {
         return inventoryList;
     }
-
-    private static Item getItem(int position) {
+     public List<Item> resetList() {
+        return inventoryList = new ArrayList<>(ITEM_MAX);
+    }
+    private Item getItem(int position) {
         return getList().get(position);
     }
 
-    static Item getItem(Predicate<Item> filter) {
-        for (Item it : Inventory.getList())
+    Item getItem(Predicate<Item> filter) {
+        for (Item it : GameEngine.getInstance().getInventory().getList())
             if (filter.test(it)) return it;
         return null;
     }
 
-    public static boolean inInventory(String itemName) {
+    public boolean inInventory(String itemName) {
         return getItem(el -> el.getName().equals(itemName)) != null;
     }
 
@@ -45,17 +47,17 @@ public class Inventory {
         return new Item(DEFAULT_ITEM, new Point2D(INVENTORY_WIDTH + position, INVENTORY_HEIGHT), DEFAULT_LAYER);
     }
 
-    public static void addInventory(Item item) {
+    public void addInventory(Item item) {
         for (int x = 0; x < ITEM_MAX; x++)
             if (getItem(x).getName().equals(DEFAULT_ITEM)) {
                 item.setPosition(new Point2D(INVENTORY_WIDTH + x, INVENTORY_HEIGHT));
-                Inventory.getList().set(x, item);
+                GameEngine.getInstance().getInventory().getList().set(x, item);
                 return;
             }
         logger.info("Inventory is full!");
     }
 
-    public static void setDefaultInventory(Item it) {
+    public void setDefaultInventory(Item it) {
         it.setName(DEFAULT_ITEM);
         it.setLayer(DEFAULT_LAYER);
     }
@@ -66,7 +68,7 @@ public class Inventory {
         else {
             getItem(position).setPosition(newPosition);
             GameEngine.getInstance().getRoom().addElementToRoom(getItem(position));
-            Inventory.getList().set(position, defaultInventoryItem(position));
+            GameEngine.getInstance().getInventory().getList().set(position, defaultInventoryItem(position));
             // TODO: check bug
         }
     }
