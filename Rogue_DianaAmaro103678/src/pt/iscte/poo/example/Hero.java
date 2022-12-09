@@ -39,27 +39,16 @@ public class Hero extends GameElement implements Movable {
     public void move(Direction d) {
         Point2D newPos = getPosition().plus(d.asVector());
 
-        List<GameElement> elementList = selectList(GameEngine.getRoomList(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
-
-        if (elementList.isEmpty()) {
-            if (isOnTheEdge(newPos)) {
-                Door door = (Door) select(GameEngine.getRoomList(), el -> el.getPosition().equals(getPosition()) && el.getName().matches("Door.*"));
-                if (door != null) interactWithDoor(door);
-            } else {
+        if (isOnTheEdge(newPos)) {
+            Door door = (Door) select(GameEngine.getRoomList(), el -> el.getPosition().equals(getPosition()) && el.getName().matches("Door.*"));
+            if (door != null) interactWithDoor(door);
+        } else {
+            List<GameElement> elementList = selectList(GameEngine.getRoomList(), el -> el.getPosition().equals(newPos) && el.getLayer() >= 1);
+            if (elementList.isEmpty())
                 setPosition(newPos);
-            }
+            else
+                interactWithElements(elementList, newPos);
         }
-
-        for (GameElement el : elementList)
-            if (el.getName().equals("Wall")) {
-                logger.info(this.getName() + " hit a Wall");
-            } else if (el.getName().matches("Door.*")) {
-                interactWithDoor((Door) el);
-            } else if (el.getLayer() == 2) {
-                addItemToInventory(el, newPos);
-            } else {
-                this.attack((Enemy) el, -1);
-            }
 
         if (getIsDying())
             updateHitPoints(-1);
@@ -83,8 +72,8 @@ public class Hero extends GameElement implements Movable {
     @Override
     public void updateHitPoints(int delta) {
         // TODO: restart or close game
-        setHitPoints(Math.max(0, getHitPoints() + delta));
-        //removeHealth()
+        if (Inventory.inInventory("Armor") && Math.random() > 0.5)
+            setHitPoints(Math.max(0, getHitPoints() + delta));
     }
 
     @Override
@@ -97,6 +86,19 @@ public class Hero extends GameElement implements Movable {
             movable.updateHitPoints(hitPoints);
         updateScore(oldScore - movable.getHitPoints());
         logger.info(getName() + " hit " + movable.getName() + " -> new hitPoints: " + movable.getHitPoints());
+    }
+
+    private void interactWithElements(List<GameElement> elementList, Point2D position) {
+        for (GameElement el : elementList)
+            if (el.getName().equals("Wall")) {
+                logger.info(this.getName() + " hit a Wall");
+            } else if (el.getName().matches("Door.*")) {
+                interactWithDoor((Door) el);
+            } else if (el.getLayer() == 2) {
+                addItemToInventory(el, position);
+            } else {
+                this.attack((Enemy) el, -1);
+            }
     }
 
     private void addItemToInventory(GameElement el, Point2D position) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static pt.iscte.poo.example.GameEngine.getHero;
 import static pt.iscte.poo.example.GameEngine.logger;
 
 public class Inventory {
@@ -68,6 +69,14 @@ public class Inventory {
             GameEngine.setRoomElement(getItem(position));
             Inventory.getList().set(position, defaultInventoryItem(position));
             // TODO: check bug
+        }
+    }
+
+    public void useInventoryItem(int position) {
+        if (getItem(position).getName().equals("HealingPotion")) {
+            logger.info(getItem(position).getName() + " has been used");
+            setDefaultInventory(getItem(position));
+            getHero().setIsDying(false);
         }
     }
 }

@@ -169,6 +169,12 @@ public class GameEngine implements Observer {
             turns++;
         } else if (key >= KeyEvent.VK_1 && key <= KeyEvent.VK_3) {
             inventory.removeInventoryIntoPosition(Character.getNumericValue(key) - 1, hero.getPosition());
+        } else if (key == KeyEvent.VK_Q) {
+            inventory.useInventoryItem(0);
+        } else if (key == KeyEvent.VK_W) {
+            inventory.useInventoryItem(1);
+        } else if (key == KeyEvent.VK_E) {
+            inventory.useInventoryItem(2);
         }
 
         room.moveEnemies();
@@ -177,17 +183,17 @@ public class GameEngine implements Observer {
         gui.update();
 
         if (hero.getHitPoints() == 0) {
-            String user = GameEngine.askUser(getHero().getName() + " has died. Insert you name to save the score");
+            String user = GameEngine.askUser("GAME OVER. Insert you name to save the score!");
             logger.info(user + " got the score " + GameEngine.getScore());
             // TODO: save scores
             //GameEngine.sendMessageToGui("Press 'ok' to play again. Close the window to leave the game.");
-           // if (((ImageMatrixGUI) source).wasWindowClosed())
-                GameEngine.closeGui();
-           // else {
+            // if (((ImageMatrixGUI) source).wasWindowClosed())
+            GameEngine.closeGui();
+            // else {
             //    gui.dispose();
             //    gui = ImageMatrixGUI.getInstance();
             //    GameEngine.getInstance().start();
-            }
+        }
     }
 
     public static void removeGameElement(GameElement el) {

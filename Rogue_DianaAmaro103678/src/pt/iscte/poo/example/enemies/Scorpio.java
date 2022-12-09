@@ -1,6 +1,8 @@
 package pt.iscte.poo.example.enemies;
 
 import pt.iscte.poo.example.Enemy;
+import pt.iscte.poo.example.GameEngine;
+import pt.iscte.poo.example.Hero;
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
@@ -14,10 +16,12 @@ public class Scorpio extends Enemy {
 
     @Override
     public void move() {
-        // TODO: problema quando vai para a linha dos items
-        Direction d = Direction.UP;
-        Vector2D randVector = d.asVector();
-        Point2D newPos = getPosition().plus(randVector);
-        if (ImageMatrixGUI.getInstance().isWithinBounds(newPos)) setPosition(newPos);
+        Hero hero = GameEngine.getHero();
+        setPosition(moveTowardsHero(hero.getPosition()));
+
+        if (getPosition().distanceTo(hero.getPosition()) == 0) {
+            hero.setIsDying(true);
+            attack(hero, -1);
+        }
     }
 }
