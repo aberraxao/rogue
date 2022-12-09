@@ -1,6 +1,7 @@
 package pt.iscte.poo.example;
 
-import java.util.List;
+import java.sql.SQLOutput;
+import java.util.*;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.gui.ImageTile;
@@ -28,6 +29,7 @@ public class GameEngine implements Observer {
     private Inventory inventory;
     private Hero hero;
     private Room room;
+    private Map<String, Integer> topScores = new TreeMap<>();
 
     public static GameEngine getInstance() {
         if (INSTANCE == null) INSTANCE = new GameEngine();
@@ -112,13 +114,6 @@ public class GameEngine implements Observer {
             gui.addImage((ImageTile) el);
     }
 
-    public <E> void clearList(List<E> elements) {
-        for (E el : elements) {
-            room.removeElement((GameElement) el);
-            gui.removeImage((ImageTile) el);
-        }
-    }
-
     public void updateGui() {
         GameEngine.getInstance().getHealthBar().updateHealth();
         gui.update();
@@ -198,11 +193,20 @@ public class GameEngine implements Observer {
         else
             user = askUser("GAME OVER. Insert you name to save the score!");
         logger.info(user + " got the score " + hero.getScore());
-        // TODO: save scores
         gui.setMessage("Press 'ok' to play again. Close the window to leave the game.");
-        if (gui.wasWindowClosed())
+        topScores.put(user, getHero().getScore());
+        if (gui.wasWindowClosed()) {
+            topScores.entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .limit(5)
+                    .forEachOrdered(x -> topScores.put(x.getKey(), x.getValue()));
+
+            for (String treeKey : topScores.keySet()) {
+                System.out.println("Player " + treeKey + ": " + topScores.get(treeKey));
+
+            }
             closeGui();
-        else {
+        } else {
             clearAll();
             start();
         }
